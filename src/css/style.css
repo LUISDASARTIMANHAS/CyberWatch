@@ -1,0 +1,112 @@
+/* =============================== */
+/* FUNDO / GRADE FUTURISTA         */
+/* =============================== */
+
+body,.bg-dark {
+  background-color: black !important;
+  color: #ffffff;
+  overflow-x: hidden;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Grade azul animada */
+.grid-bg {
+    position: fixed;
+    background-size: 40px 40px;
+    background-image: linear-gradient(rgba(0, 255, 255, 0.133) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.133) 1px, transparent 1px);
+    z-index: -1;
+    inset: 0px;
+    animation: 6s linear 0s infinite normal none running gridMove;
+}
+
+@keyframes gridMove {
+  from { background-position: 0 0; }
+  to   { background-position: 40px 40px; }
+}
+
+/* =============================== */
+/* TEXTOS FUTURISTAS               */
+/* =============================== */
+
+.titulo,
+.neon-text {
+  color: #00eaff;
+  text-shadow: 0 0 10px #00eaff;
+}
+
+.subtitulo {
+  opacity: 0.8;
+}
+
+.neon-link {
+  color: #9deeff !important;
+  text-shadow: 0 0 8px #00c8ff;
+  transition: 0.3s;
+}
+
+.neon-link:hover {
+  color: #ccffff !important;
+  text-shadow: 0 0 14px #00eaff;
+}
+
+/* =============================== */
+/* NAVBAR FUTURISTA                */
+/* =============================== */
+
+.navbar-glass {
+  background: rgba(10, 15, 31, 0.75);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #00eaff33;
+  box-shadow: 0 0 12px #00eaff22;
+}
+
+/* =============================== */
+/* BOTÕES NEON                     */
+/* =============================== */
+
+.btn-neon {
+  background: #00eaff;
+  color: black;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 0 12px #00eaffaa;
+  transition: 0.3s;
+}
+
+.btn-neon:hover {
+  box-shadow: 0 0 20px #00eaff;
+  transform: scale(1.04);
+  color: black;
+}
+
+/* =============================== */
+/* CARDS FUTURISTAS                */
+/* =============================== */
+
+.card-futuristic {
+  background: linear-gradient(145deg, #141a33dd, #0c1024dd);
+  color: #e8f7ff;
+  border: 1px solid #00eaffcc;
+  border-radius: 14px;
+  transition: 0.35s;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 8px #00eaff33;
+}
+
+.card-futuristic h4 {
+  text-shadow: 0 0 12px #00eaffaa;
+  color: #a8f3ff;
+}
+
+.card-futuristic:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 22px #00eaffaa;
+}
+
+/* =============================== */
+/* HERO SECTION                    */
+/* =============================== */
+
+.hero-section {
+  margin-top: 60px;
+}
