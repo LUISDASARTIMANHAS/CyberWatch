@@ -4,7 +4,7 @@ const stepCode = document.getElementById("step-code");
 const statusLabel = document.getElementById("status");
 const submitButton = form.querySelector("button[type='submit']");
 
-const API_BASE = "/api/auth";
+const API_BASE = "https://pingobras-sg.onrender.com/api/auth";
 const EMAIL_COOLDOWN_SEG = 60;
 
 let uiLocked = false;
