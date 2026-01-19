@@ -6,12 +6,13 @@ const submitButton = form.querySelector("button[type='submit']");
 
 const API_BASE = "https://pingobras-sg.onrender.com/api/auth";
 const EMAIL_COOLDOWN_SEG = 60;
+const COOLDOWN_KEY = "magiclink_cooldown_until";
 
 let uiLocked = false;
 let cooldownTimer = null;
 
 /**
- * Inicializa o fluxo
+ * Inicialização
  * @returns {void}
  */
 function init() {
@@ -42,14 +43,14 @@ function isEmailStep() {
 }
 
 /**
- * Envia código
+ * Envia email com código
  * @returns {Promise<void>}
  */
 async function sendEmail() {
-  const email = document.getElementById("email");
+  const emailInput = document.getElementById("email");
 
-  if (!email.checkValidity()) {
-    email.reportValidity();
+  if (!emailInput.checkValidity()) {
+    emailInput.reportValidity();
     return;
   }
 
@@ -61,7 +62,7 @@ async function sendEmail() {
     const res = await fetch(`${API_BASE}/request-code`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email.value.trim() }),
+      body: JSON.stringify({ email: emailInput.value.trim() }),
     });
 
     startCooldown(EMAIL_COOLDOWN_SEG);
@@ -69,7 +70,7 @@ async function sendEmail() {
     if (!res.ok) throw new Error();
 
     goToCodeStep();
-    statusLabel.textContent = "Código enviado.";
+    statusLabel.textContent = "Código enviado. Verifique seu email.";
   } catch {
     statusLabel.textContent = "Solicitação bloqueada.";
   } finally {
@@ -82,10 +83,11 @@ async function sendEmail() {
  * @returns {Promise<void>}
  */
 async function verifyCode() {
-  const code = document.getElementById("code");
+  const codeInput = document.getElementById("code");
+  const emailValue = document.getElementById("email").value.trim();
 
-  if (!code.checkValidity()) {
-    code.reportValidity();
+  if (!codeInput.checkValidity()) {
+    codeInput.reportValidity();
     return;
   }
 
@@ -96,16 +98,25 @@ async function verifyCode() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: document.getElementById("email").value.trim(),
-        code: code.value.trim(),
+        email: emailValue,
+        code: codeInput.value.trim(),
       }),
     });
 
     if (!res.ok) throw new Error();
 
+    /**
+     * Token provisório (frontend-first)
+     * Backend futuramente retorna JWT real
+     */
+    const fakeToken = btoa(`${emailValue}:${Date.now()}`);
+
+    login(fakeToken, 30);
+
     statusLabel.textContent = "Acesso liberado ✔";
+    redirectAfterLogin();
   } catch {
-    statusLabel.textContent = "Código inválido.";
+    statusLabel.textContent = "Código inválido ou expirado.";
   } finally {
     unlockUI();
   }
@@ -141,6 +152,49 @@ function unlockUI() {
 }
 
 /**
+ * Redireciona após login
+ * @returns {void}
+ */
+function redirectAfterLogin() {
+  window.location.replace("/");
+}
+
+/**
+ * Inicia cooldown
+ * @param {number} seconds
+ * @returns {void}
+ */
+function startCooldown(seconds) {
+  const until = Date.now() + seconds * 1000;
+  localStorage.setItem(COOLDOWN_KEY, until);
+}
+
+/**
+ * Cooldown ativo?
+ * @returns {boolean}
+ */
+function isCooldownActive() {
+  return Date.now() < getCooldownUntil();
+}
+
+/**
+ * Retorna segundos restantes
+ * @returns {number}
+ */
+function getCooldownRemaining() {
+  const remaining = Math.ceil((getCooldownUntil() - Date.now()) / 1000);
+  return Math.max(0, remaining);
+}
+
+/**
+ * Retorna timestamp do cooldown
+ * @returns {number}
+ */
+function getCooldownUntil() {
+  return Number(localStorage.getItem(COOLDOWN_KEY) || 0);
+}
+
+/**
  * Atualiza texto de cooldown automaticamente
  * @returns {void}
  */
@@ -153,7 +207,7 @@ function startCooldownWatcher() {
     if (remaining > 0) {
       submitButton.disabled = true;
       statusLabel.textContent = `Aguarde ${remaining}s para reenviar.`;
-    } else {
+    } else if (!uiLocked) {
       submitButton.disabled = false;
       statusLabel.textContent = "";
     }
