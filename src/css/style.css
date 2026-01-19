@@ -2,7 +2,8 @@
 /* FUNDO / GRADE FUTURISTA         */
 /* =============================== */
 
-body,.bg-dark {
+body,
+.bg-dark {
   background-color: black !important;
   color: #ffffff;
   overflow-x: hidden;
@@ -11,17 +12,22 @@ body,.bg-dark {
 
 /* Grade azul animada */
 .grid-bg {
-    position: fixed;
-    background-size: 40px 40px;
-    background-image: linear-gradient(rgba(0, 255, 255, 0.133) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.133) 1px, transparent 1px);
-    z-index: -1;
-    inset: 0px;
-    animation: 6s linear 0s infinite normal none running gridMove;
+  position: fixed;
+  background-size: 40px 40px;
+  background-image: linear-gradient(rgba(0, 255, 255, 0.133) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.133) 1px, transparent 1px);
+  z-index: -1;
+  inset: 0px;
+  animation: 6s linear 0s infinite normal none running gridMove;
 }
 
 @keyframes gridMove {
-  from { background-position: 0 0; }
-  to   { background-position: 40px 40px; }
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 40px 40px;
+  }
 }
 
 /* =============================== */
@@ -109,4 +115,35 @@ body,.bg-dark {
 
 .hero-section {
   margin-top: 60px;
+}
+
+/* =============================== */
+/* PARTÍCULAS FUTURISTAS           */
+/* =============================== */
+
+.particle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00eaff, transparent 70%);
+  box-shadow: 0 0 12px #00eaff;
+  animation: particleFade 1s linear forwards;
+  z-index: 9999;
+}
+
+/**
+ * Animação da partícula
+ */
+@keyframes particleFade {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.3) translateY(-20px);
+  }
 }

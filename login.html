@@ -1,28 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Login – LDA CyberWatch</title>
+<head>
+  <meta charset="UTF-8" />
+  <title>Login – LDA CyberWatch</title>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="src/css/style.css" />
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <body
-    class="bg-dark text-light d-flex justify-content-center align-items-center vh-100"
-  >
-    <div class="grid-bg"></div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="src/css/style.css" />
+</head>
 
-    <div class="card card-futuristic p-4" style="width: 350px">
-      <h3 class="text-center neon-text mb-3">Acesso</h3>
+<body class="bg-dark text-light vh-100">
+  <div class="grid-bg" aria-hidden="true"></div>
 
-      <input type="text" class="form-control mb-3" placeholder="Usuário" />
-      <input type="password" class="form-control mb-4" placeholder="Senha" />
+  <main class="container h-100 d-flex justify-content-center align-items-center">
+    <section class="card card-futuristic p-4 login-card" aria-labelledby="login-title">
 
-      <button class="btn btn-neon w-100">Entrar</button>
-    </div>
-  </body>
+      <header>
+        <h1 id="login-title" class="text-center neon-text mb-3">
+          Acesso Seguro
+        </h1>
+      </header>
+
+      <!-- FORM SEMÂNTICO -->
+      <form id="login-form" novalidate>
+
+        <!-- ETAPA 1 -->
+        <fieldset id="step-email">
+          <legend class="visually-hidden">Envio do código</legend>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="seu@email.com"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-neon w-100">
+            Enviar código
+          </button>
+        </fieldset>
+
+        <!-- ETAPA 2 -->
+        <fieldset id="step-code" class="d-none">
+          <legend class="visually-hidden">Verificação do código</legend>
+
+          <div class="mb-3">
+            <label for="code" class="form-label">Código de verificação</label>
+            <input
+              type="text"
+              id="code"
+              name="code"
+              class="form-control text-center"
+              inputmode="numeric"
+              pattern="[0-9]{6}"
+              maxlength="6"
+              placeholder="000000"
+              required
+              autocomplete="one-time-code"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-neon w-100">
+            Verificar código
+          </button>
+        </fieldset>
+
+        <p id="status" class="text-center mt-3 small" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="src/js/particles.js"></script>
+  <script src="src/js/cooldown.js"></script>
+  <script src="src/js/login.js"></script>
+</body>
 </html>
