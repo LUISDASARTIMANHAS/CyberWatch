@@ -61,7 +61,10 @@ async function sendEmail() {
   try {
     const res = await fetch(`${API_BASE}/request-code`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": "CyberWatch2026",
+      },
       body: JSON.stringify({ email: emailInput.value.trim() }),
     });
 
@@ -96,7 +99,10 @@ async function verifyCode() {
   try {
     const res = await fetch(`${API_BASE}/verify-code`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "CyberWatch2026",
+      },
       body: JSON.stringify({
         email: emailValue,
         code: codeInput.value.trim(),
