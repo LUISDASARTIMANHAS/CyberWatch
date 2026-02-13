@@ -1,3 +1,6 @@
+const API_BASE = "https://pingobras-sg.onrender.com/api/crt";
+const API_KEY = "CyberWatch2026";
+
 /**
  * Gera um ID técnico único para o certificado
  * @returns {string}
@@ -29,23 +32,69 @@ const syncFields = () => {
 };
 
 /**
+ * Obtém dados do formulário formatados
+ * @returns {Object}
+ */
+const getCertData = () => {
+  const dataInput = document.getElementById("inData").value;
+
+  return {
+    id: document.getElementById("inID").value,
+    empresa: document.getElementById("inEmpresa").value.trim(),
+    sistema: document.getElementById("inSistema").value.trim(),
+    capacidade: document.getElementById("inCapacidade").value.trim(),
+    data: dataInput
+      ? dataInput.split("-").reverse().join("/")
+      : ""
+  };
+};
+
+/**
+ * Registra certificado na API
+ * @param {Object} certData
+ * @returns {Promise<boolean>}
+ */
+const registerCertificate = async (certData) => {
+  try {
+    const res = await fetch(`${API_BASE}/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: API_KEY
+      },
+      body: JSON.stringify(certData)
+    });
+
+    return res.ok;
+  } catch {
+    return false;
+  }
+};
+
+/**
  * Gera o PDF do certificado
  * @returns {Promise<void>}
  */
 const generatePDF = async () => {
-
   syncFields();
+
+  const certData = getCertData();
+
+  // registra primeiro no servidor
+  const registered = await registerCertificate(certData);
+
+  if (!registered) {
+    alert("Erro ao registrar certificado no servidor.");
+    return;
+  }
 
   const element = document.getElementById("laudo-tecnico");
   const oldDisplay = element.style.display;
 
   element.style.display = "block";
 
-  const empresa = document.getElementById("inEmpresa").value;
-  const capacidade = document.getElementById("inCapacidade").value;
-
   const filename =
-    `Certificado ${empresa} - ${capacidade} - LDA CyberWatch.pdf`;
+    `Certificado ${certData.empresa} - ${certData.capacidade} - LDA CyberWatch.pdf`;
 
   await html2pdf()
     .set({
@@ -66,7 +115,6 @@ const generatePDF = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-
   const id = generateTechnicalID();
 
   document.getElementById("inID").value = id;
