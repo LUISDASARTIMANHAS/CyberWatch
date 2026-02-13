@@ -3,25 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Gerador de Laudos - LDA CyberWatch</title>
+
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/certificado.css" />
+    <link rel="stylesheet" href="/src/css/style-print.css" />
   </head>
-  <body class="bg-light">
+
+  <body class="bg-dark text-light">
+    <div class="grid-bg"></div>
+
+    <!-- NAVBAR PADRÃO -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-glass px-3 no-print">
+      <a class="navbar-brand neon-text fw-bold" href="index.html">
+        LDA CyberWatch
+      </a>
+    </nav>
+
     <main class="container my-5 no-print">
       <header class="mb-4 border-bottom pb-3">
-        <h1 class="h3 text-dark">
-          Console de Emissão: <span class="text-primary">LDA CyberWatch</span>
-        </h1>
-        <p class="text-muted">
+        <h1 class="h3 neon-text">Console de Emissão: LDA CyberWatch</h1>
+        <p class="subtitulo">
           Divisão de Segurança e Infraestrutura - PINGOBRAS S.A.
         </p>
       </header>
 
-      <section class="card shadow-sm border-0">
+      <section class="card card-futuristic shadow-sm border-0">
         <div class="card-body p-4">
           <form id="formCertificado">
             <div class="row g-3">
@@ -31,24 +43,24 @@
                   type="text"
                   id="inEmpresa"
                   class="form-control"
-                  placeholder="Razão Social do Cliente"
                   required
                 />
               </div>
+
               <div class="col-md-6">
-                <label class="form-label">Sistema / Segmento Avaliado</label>
+                <label class="form-label">Sistema Avaliado</label>
                 <input
                   type="text"
                   id="inSistema"
                   class="form-control"
-                  placeholder="Ex: Core Network / DataCenter"
                   required
                 />
               </div>
+
               <div class="col-md-4">
                 <label class="form-label">Nível de Capacidade</label>
                 <select id="inCapacidade" class="form-select" required>
-                  <option value="" selected disabled>Escolha o nível...</option>
+                  <option value="" disabled selected>Escolha...</option>
                   <option value="1 Gb/s">Nível 1 — Até 1 Gb/s</option>
                   <option value="2.5 Gb/s">Nível 2 — Até 2.5 Gb/s</option>
                   <option value="5 Gb/s">Nível 3 — Até 5 Gb/s</option>
@@ -56,30 +68,28 @@
                   <option value="40 Gb/s">Nível 5 — Especialista</option>
                 </select>
               </div>
+
               <div class="col-md-4">
                 <label class="form-label">Data do Teste</label>
                 <input type="date" id="inData" class="form-control" required />
               </div>
+
               <div class="col-md-4">
-                <label class="form-label">ID do Laudo (Auto)</label>
-                <input
-                  type="text"
-                  id="inID"
-                  class="form-control bg-light"
-                  readonly
-                />
+                <label class="form-label">ID do Laudo</label>
+                <input type="text" id="inID" class="form-control" readonly />
               </div>
             </div>
+
             <div class="mt-4 d-flex gap-2">
+              <button type="button" id="btnPDF" class="btn btn-neon">
+                Gerar PDF
+              </button>
               <button
                 type="button"
                 onclick="window.print()"
-                class="btn btn-dark px-4"
+                class="btn btn-outline-light"
               >
-                Imprimir Laudo Técnico
-              </button>
-              <button type="reset" class="btn btn-outline-danger">
-                Limpar
+                Imprimir
               </button>
             </div>
           </form>
@@ -87,18 +97,18 @@
       </section>
     </main>
 
+    <!-- CERTIFICADO -->
     <div id="laudo-tecnico" class="cert-page">
       <div class="cert-container">
-        <header class="d-flex justify-content-between align-items-center mb-5">
-          <div class="brand-main">
-            <h2 class="mb-0 fw-bold">PINGOBRAS S.A.</h2>
-            <span class="text-secondary small"
-              >TECNOLOGIA E INFRAESTRUTURA</span
-            >
+        <header class="d-flex justify-content-between mb-5">
+          <div>
+            <h2 class="fw-bold">PINGOBRAS S.A.</h2>
+            <small>TECNOLOGIA E INFRAESTRUTURA</small>
           </div>
-          <div class="brand-sub text-end">
-            <h3 class="mb-0 fw-bold text-primary">LDA CyberWatch</h3>
-            <span class="text-muted small">NETWORK STRESS TEST UNIT</span>
+
+          <div class="text-end">
+            <h3 class="fw-bold text-primary">LDA CyberWatch</h3>
+            <small>NETWORK STRESS TEST UNIT</small>
           </div>
         </header>
 
@@ -106,72 +116,38 @@
           <h1 class="cert-title">
             LAUDO TÉCNICO DE TESTES DE STRESS E PERFORMANCE DE REDE
           </h1>
-          <div class="title-underline"></div>
         </div>
 
-        <article class="cert-body mt-4">
-          <p>
-            Certificamos para os devidos fins técnicos que a infraestrutura de
-            rede e os sistemas do cliente foram submetidos a protocolos
-            controlados de tráfego sintético, testes de saturação de banda e
-            análise de jitter, atingindo o seguinte patamar de conformidade:
+        <p>
+          Certificamos para os devidos fins técnicos que a infraestrutura de
+          rede foi submetida a testes controlados de tráfego sintético.
+        </p>
+
+        <div class="text-center my-5">
+          <div class="performance-badge">
+            <span id="outCapacidade">---</span>
+          </div>
+        </div>
+
+        <div class="data-grid">
+          <div><strong>EMPRESA:</strong> <span id="outEmpresa"></span></div>
+          <div><strong>DATA:</strong> <span id="outData"></span></div>
+          <div><strong>SISTEMA:</strong> <span id="outSistema"></span></div>
+          <div><strong>ID:</strong> <span id="outID"></span></div>
+        </div>
+
+        <footer class="mt-auto pt-5">
+          <p class="small">
+            Verificação disponível em:
+            <strong>
+              https://luisdasartimanhas.github.io/CyberWatch/certifild/valid
+            </strong>
           </p>
-
-          <div class="badge-container text-center my-5">
-            <div class="performance-badge">
-              <span id="outCapacidade">SELECIONE O NÍVEL</span>
-            </div>
-          </div>
-
-          <div class="data-grid">
-            <div class="data-item">
-              <strong>EMPRESA AVALIADA:</strong>
-              <span id="outEmpresa">__________</span>
-            </div>
-            <div class="data-item">
-              <strong>DATA DO TESTE:</strong>
-              <span id="outData">__/__/____</span>
-            </div>
-            <div class="data-item">
-              <strong>SISTEMA AVALIADO:</strong>
-              <span id="outSistema">__________</span>
-            </div>
-            <div class="data-item">
-              <strong>ID DO CERTIFICADO:</strong>
-              <span id="outID">__________</span>
-            </div>
-          </div>
-        </article>
-
-        <footer class="cert-footer mt-auto">
-          <div class="row align-items-end">
-            <div class="col-8">
-              <p class="obs-legal">
-                Este laudo atesta a capacidade nominal no momento do teste. A
-                validade técnica expira caso ocorram alterações físicas na
-                topologia. Verificação disponível em:
-                <strong
-                  >https://luisdasartimanhas.github.io/CyberWatch/certifildVerify</strong
-                >
-              </p>
-            </div>
-            <div class="col-4 text-center">
-              <div class="signature-area">
-                <div class="signature-line"></div>
-                <span class="small fw-bold">LUIS AUGUSTO DE SOUZA</span><br />
-                <span class="very-small text-muted text-uppercase"
-                  >Responsável Técnico (LUIS DAS ARTIMANHAS)</span
-                ><br />
-                <span class="very-small text-primary fw-bold"
-                  >LDA CyberWatch / PINGOBRAS S.A.</span
-                >
-              </div>
-            </div>
-          </div>
         </footer>
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="/src/js/pdfGenerator.js"></script>
   </body>
 </html>

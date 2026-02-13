@@ -1,0 +1,31 @@
+.cert-page {
+    display: none;
+}
+
+.cert-container {
+    background: white;
+    color: black;
+    width: 297mm;
+    height: 210mm;
+    padding: 20mm;
+    box-sizing: border-box;
+}
+
+.cert-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.performance-badge {
+    background: #0b1a2a;
+    color: white;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
