@@ -18,7 +18,6 @@
   <body class="bg-dark text-light">
     <div class="grid-bg"></div>
 
-    <!-- NAVBAR PADRÃO -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-glass px-3 no-print">
       <a class="navbar-brand neon-text fw-bold" href="index.html">
         LDA CyberWatch
@@ -84,6 +83,7 @@
               <button type="button" id="btnPDF" class="btn btn-neon">
                 Gerar PDF
               </button>
+
               <button
                 type="button"
                 onclick="window.print()"
@@ -99,7 +99,7 @@
 
     <!-- CERTIFICADO -->
     <div id="laudo-tecnico" class="cert-page">
-      <div class="cert-container">
+      <div class="cert-container d-flex flex-column h-100">
         <header class="d-flex justify-content-between mb-5">
           <div>
             <h2 class="fw-bold">PINGOBRAS S.A.</h2>
@@ -118,10 +118,17 @@
           </h1>
         </div>
 
-        <p>
-          Certificamos para os devidos fins técnicos que a infraestrutura de
-          rede foi submetida a testes controlados de tráfego sintético.
-        </p>
+        <article class="cert-description">
+          <p>
+            Certificamos para os devidos fins técnicos que a infraestrutura de
+            rede e os sistemas avaliados foram submetidos a protocolos
+            controlados de validação operacional, incluindo geração de tráfego
+            sintético, testes de saturação de banda, análise de jitter e
+            simulação de cenários de alta carga e eventos de negação de serviço
+            induzida (DDoS), com o objetivo de validar estabilidade, capacidade
+            nominal e comportamento sob condições extremas de operação.
+          </p>
+        </article>
 
         <div class="text-center my-5">
           <div class="performance-badge">
@@ -137,12 +144,31 @@
         </div>
 
         <footer class="mt-auto pt-5">
-          <p class="small">
-            Verificação disponível em:
-            <strong>
-              https://luisdasartimanhas.github.io/CyberWatch/certifild/valid
-            </strong>
-          </p>
+          <div class="row align-items-end">
+            <div class="col-8">
+              <p class="small">
+                Este laudo atesta a capacidade nominal no momento da execução
+                dos testes. Alterações físicas ou lógicas na infraestrutura
+                podem invalidar os resultados apresentados. Verificação
+                disponível em:
+                <strong>
+                  https://luisdasartimanhas.github.io/CyberWatch/certifild/valid
+                </strong>
+              </p>
+            </div>
+
+            <div class="col-4 text-center">
+              <div class="signature-area">
+                <div class="signature-line"></div>
+                <span class="fw-bold">LUIS AUGUSTO DE SOUZA</span><br />
+                <span class="small text-muted"> Responsável Técnico </span
+                ><br />
+                <span class="small text-primary fw-bold">
+                  LDA CyberWatch / PINGOBRAS S.A.
+                </span>
+              </div>
+            </div>
+          </div>
         </footer>
       </div>
     </div>

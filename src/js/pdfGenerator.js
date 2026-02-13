@@ -3,9 +3,9 @@
  * @returns {string}
  */
 const generateTechnicalID = () => {
-	const year = new Date().getFullYear();
-	const rand = Math.floor(Math.random() * 999999);
-	return `LDA-${year}-${rand}`;
+  const year = new Date().getFullYear();
+  const rand = Math.floor(Math.random() * 999999);
+  return `LDA-${year}-${rand}`;
 };
 
 /**
@@ -13,71 +13,66 @@ const generateTechnicalID = () => {
  * @returns {void}
  */
 const syncFields = () => {
-	const empresa = document.getElementById("inEmpresa").value;
-	const sistema = document.getElementById("inSistema").value;
-	const capacidade = document.getElementById("inCapacidade").value;
-	const data = document.getElementById("inData").value;
+  const empresa = document.getElementById("inEmpresa").value;
+  const sistema = document.getElementById("inSistema").value;
+  const capacidade = document.getElementById("inCapacidade").value;
+  const data = document.getElementById("inData").value;
 
-	document.getElementById("outEmpresa").textContent = empresa;
-	document.getElementById("outSistema").textContent = sistema;
-	document.getElementById("outCapacidade").textContent = capacidade;
+  document.getElementById("outEmpresa").textContent = empresa;
+  document.getElementById("outSistema").textContent = sistema;
+  document.getElementById("outCapacidade").textContent = capacidade;
 
-	if (data) {
-		document.getElementById("outData").textContent = data
-			.split("-")
-			.reverse()
-			.join("/");
-	}
+  if (data) {
+    document.getElementById("outData").textContent =
+      data.split("-").reverse().join("/");
+  }
 };
 
 /**
  * Gera o PDF do certificado
- * Torna o elemento visível temporariamente para renderização
  * @returns {Promise<void>}
  */
 const generatePDF = async () => {
-	syncFields();
 
-	const element = document.getElementById("laudo-tecnico");
+  syncFields();
 
-	// salva estado atual
-	const oldDisplay = element.style.display;
+  const element = document.getElementById("laudo-tecnico");
+  const oldDisplay = element.style.display;
 
-	// torna visível para renderização
-	element.style.display = "block";
+  element.style.display = "block";
 
-	const empresa = document.getElementById("inEmpresa").value;
-	const capacidade = document.getElementById("inCapacidade").value;
+  const empresa = document.getElementById("inEmpresa").value;
+  const capacidade = document.getElementById("inCapacidade").value;
 
-	const filename = `Certificado ${empresa} - ${capacidade} - LDA CyberWatch.pdf`;
+  const filename =
+    `Certificado ${empresa} - ${capacidade} - LDA CyberWatch.pdf`;
 
-	await html2pdf()
-		.set({
-			margin: 0,
-			filename: filename,
-			image: { type: "jpeg", quality: 1 },
-			html2canvas: {
-				scale: 2,
-				useCORS: true,
-			},
-			jsPDF: {
-				unit: "mm",
-				format: "a4",
-				orientation: "landscape",
-			},
-		})
-		.from(element)
-		.save();
+  await html2pdf()
+    .set({
+      margin: 0,
+      filename: filename,
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "landscape"
+      }
+    })
+    .from(element)
+    .save();
 
-	// volta ao estado anterior
-	element.style.display = oldDisplay;
+  element.style.display = oldDisplay;
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-	const id = generateTechnicalID();
 
-	document.getElementById("inID").value = id;
-	document.getElementById("outID").textContent = id;
+  const id = generateTechnicalID();
 
-	document.getElementById("btnPDF").addEventListener("click", generatePDF);
+  document.getElementById("inID").value = id;
+  document.getElementById("outID").textContent = id;
+
+  document
+    .getElementById("btnPDF")
+    .addEventListener("click", generatePDF);
 });

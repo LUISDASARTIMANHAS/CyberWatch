@@ -16,6 +16,12 @@
     font-weight: bold;
 }
 
+.cert-description {
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
 .performance-badge {
     background: #0b1a2a;
     color: white;
@@ -28,4 +34,15 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
+    margin-top: 20px;
+}
+
+.signature-area {
+    margin-top: 40px;
+}
+
+.signature-line {
+    width: 220px;
+    border-bottom: 2px solid black;
+    margin: 0 auto 6px auto;
 }
