@@ -61,10 +61,7 @@ async function sendEmail() {
   try {
     const res = await fetch(`${API_BASE}/request-code`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": "CyberWatch2026",
-      },
+      headers: getHeaders(),
       body: JSON.stringify({ email: emailInput.value.trim() }),
     });
 
@@ -99,10 +96,7 @@ async function verifyCode() {
   try {
     const res = await fetch(`${API_BASE}/verify-code`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "CyberWatch2026",
-      },
+      headers: getHeaders(),
       body: JSON.stringify({
         email: emailValue,
         code: codeInput.value.trim(),
@@ -198,6 +192,15 @@ function getCooldownRemaining() {
  */
 function getCooldownUntil() {
   return Number(localStorage.getItem(COOLDOWN_KEY) || 0);
+}
+
+function getHeaders() {
+  return {
+    "x-nonce": "string (único por requisição)",
+    "x-timestamp": new Date().getTime(),
+    "Content-Type": "application/json",
+    authorization: "CyberWatch2026",
+  };
 }
 
 /**
