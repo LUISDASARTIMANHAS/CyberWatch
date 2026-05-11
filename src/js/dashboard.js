@@ -9,7 +9,6 @@
 const localDatabase = {
   Jan: {
     name: "Janeiro",
-    qtde: 2,
     criticas: 1,
     medias: 4,
     baixas: 8,
@@ -17,7 +16,6 @@ const localDatabase = {
 
   Feb: {
     name: "Fevereiro",
-    qtde: 5,
     criticas: 2,
     medias: 6,
     baixas: 10,
@@ -25,7 +23,6 @@ const localDatabase = {
 
   Mar: {
     name: "Março",
-    qtde: 3,
     criticas: 0,
     medias: 5,
     baixas: 7,
@@ -33,7 +30,6 @@ const localDatabase = {
 
   Apr: {
     name: "Abril",
-    qtde: 8,
     criticas: 4,
     medias: 12,
     baixas: 16,
@@ -41,7 +37,6 @@ const localDatabase = {
 
   May: {
     name: "Maio",
-    qtde: 4,
     criticas: 1,
     medias: 7,
     baixas: 9,
@@ -49,7 +44,7 @@ const localDatabase = {
 
   Jun: {
     name: "Junho",
-    qtde: 7,
+    total: 7,
     criticas: 3,
     medias: 9,
     baixas: 14,
@@ -57,7 +52,6 @@ const localDatabase = {
 
   Jul: {
     name: "Julho",
-    qtde: 9,
     criticas: 5,
     medias: 13,
     baixas: 20,
@@ -65,7 +59,6 @@ const localDatabase = {
 
   Ago: {
     name: "Agosto",
-    qtde: 6,
     criticas: 2,
     medias: 8,
     baixas: 12,
@@ -73,7 +66,6 @@ const localDatabase = {
 
   Set: {
     name: "Setembro",
-    qtde: 11,
     criticas: 6,
     medias: 15,
     baixas: 21,
@@ -81,7 +73,6 @@ const localDatabase = {
 
   Out: {
     name: "Outubro",
-    qtde: 10,
     criticas: 4,
     medias: 14,
     baixas: 18,
@@ -89,7 +80,6 @@ const localDatabase = {
 
   Nov: {
     name: "Novembro",
-    qtde: 14,
     criticas: 8,
     medias: 18,
     baixas: 25,
@@ -97,7 +87,6 @@ const localDatabase = {
 
   Dez: {
     name: "Dezembro",
-    qtde: 12,
     criticas: 5,
     medias: 16,
     baixas: 22,
@@ -110,7 +99,7 @@ const localDatabase = {
  * @param {Object} database
  * @returns {{
  * labels: string[],
- * qtde: number[],
+ * total: number[],
  * criticas: number[],
  * medias: number[],
  * baixas: number[]
@@ -118,7 +107,7 @@ const localDatabase = {
  */
 function parseDatabase(database) {
   const labels = [];
-  const qtde = [];
+  const total = [];
   const criticas = [];
   const medias = [];
   const baixas = [];
@@ -126,16 +115,26 @@ function parseDatabase(database) {
   for (const key in database) {
     const item = database[key];
 
+    const criticasValue = item.criticas || 0;
+    const mediasValue = item.medias || 0;
+    const baixasValue = item.baixas || 0;
+
+    /**
+     * Soma automática das categorias
+     */
+    const totalValue = criticasValue + mediasValue + baixasValue;
+
     labels.push(item.name);
-    qtde.push(item.qtde || 0);
-    criticas.push(item.criticas || 0);
-    medias.push(item.medias || 0);
-    baixas.push(item.baixas || 0);
+
+    total.push(totalValue);
+    criticas.push(criticasValue);
+    medias.push(mediasValue);
+    baixas.push(baixasValue);
   }
 
   return {
     labels,
-    qtde,
+    total,
     criticas,
     medias,
     baixas,
@@ -160,8 +159,8 @@ function loadDashboardChart(canvas, database) {
 
       datasets: [
         {
-          label: "Vulnerabilidades Detectadas",
-          data: parsedData.qtde,
+          label: "Vulnerabilidades Totais",
+          data: parsedData.total,
           borderColor: "#00eaff",
           backgroundColor: "rgba(0,234,255,0.15)",
           borderWidth: 3,
