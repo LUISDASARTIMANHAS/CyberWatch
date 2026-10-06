@@ -1,5 +1,4 @@
 @media print {
-
   body {
     background: white !important;
     color: black !important;
@@ -16,7 +15,20 @@
   }
 
   @page {
-    size: A4 landscape;
+    size: A4 portrait;
     margin: 10mm;
+  }
+
+  .cert-container {
+    width: 190mm;
+    min-height: 277mm;
+    margin: 0;
+    box-shadow: none;
+  }
+
+  .report-section,
+  .report-disclaimer,
+  .report-footer {
+    break-inside: avoid;
   }
 }

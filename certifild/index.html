@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Registre e gere um documento técnico a partir dos dados informados no LDA CyberWatch." />
+    <meta name="description" content="Elabore um relatório técnico de rede com escopo, metodologia, achados e recomendações." />
     <meta name="theme-color" content="#070b12" />
 
-    <title>Gerador de Laudos - LDA CyberWatch</title>
+    <title>Gerador de Relatório Técnico - LDA CyberWatch</title>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -25,11 +25,11 @@
       <div id="msgBox" class="mt-3" aria-live="polite"></div>
       <header class="mb-4 border-bottom pb-3">
         <p class="eyebrow">RELATÓRIOS / EMISSÃO</p>
-        <h1 class="h3 neon-text">Gerador de laudo técnico</h1>
+        <h1 class="h3 neon-text">Gerador de relatório técnico</h1>
         <p class="subtitulo">
-          Informe dados verificados para registrar e gerar o documento.
+          Documente uma avaliação autorizada com contexto, evidências e próximos passos.
         </p>
-        <p class="small text-warning mb-0">Este formulário não executa testes de rede; os dados devem corresponder a uma avaliação autorizada já realizada.</p>
+        <p class="small text-warning mb-0">Este formulário não executa testes de rede. Os dados complementares são incluídos no PDF; o serviço remoto registra apenas ID, empresa, sistema, capacidade e data.</p>
       </header>
 
       <section class="card card-futuristic shadow-sm border-0">
@@ -37,35 +37,65 @@
           <form id="formCertificado">
             <div class="row g-3">
               <div class="col-md-6">
-                <label class="form-label" for="inEmpresa">Empresa avaliada</label>
+                <label class="form-label" for="inEmpresa">Organização avaliada</label>
                 <input
                   type="text"
                   id="inEmpresa"
                   class="form-control"
+                  maxlength="120"
+                  autocomplete="organization"
                   required
                 />
               </div>
 
               <div class="col-md-6">
-                <label class="form-label" for="inSistema">Sistema avaliado</label>
+                <label class="form-label" for="inSistema">Sistema ou serviço</label>
                 <input
                   type="text"
                   id="inSistema"
                   class="form-control"
+                  maxlength="160"
+                  placeholder="Nome do ativo ou serviço"
                   required
                 />
               </div>
 
+              <div class="col-md-6">
+                <label class="form-label" for="inTipo">Tipo de avaliação</label>
+                <select id="inTipo" class="form-select" required>
+                  <option value="" disabled selected>Selecione...</option>
+                  <option>Disponibilidade e latência</option>
+                  <option>Capacidade e desempenho</option>
+                  <option>Exposição de serviços</option>
+                  <option>Revisão de configuração</option>
+                  <option>Avaliação técnica consolidada</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="inEscopo">Escopo autorizado</label>
+                <input
+                  type="text"
+                  id="inEscopo"
+                  class="form-control"
+                  maxlength="240"
+                  placeholder="Ativos, domínio ou segmento incluído"
+                  required
+                />
+                <div class="form-text">Registre somente ativos próprios ou cobertos por autorização.</div>
+              </div>
+
               <div class="col-md-4">
-                <label class="form-label" for="inCapacidade">Capacidade medida</label>
+                <label class="form-label" for="inCapacidade">Capacidade de referência</label>
                 <select id="inCapacidade" class="form-select" required>
                   <option value="" disabled selected>Escolha...</option>
-                  <option value="1 Gb/s">Nível 1 — Até 1 Gb/s</option>
-                  <option value="2.5 Gb/s">Nível 2 — Até 2.5 Gb/s</option>
-                  <option value="5 Gb/s">Nível 3 — Até 5 Gb/s</option>
-                  <option value="10 Gb/s">Nível 4 — Até 10 Gb/s</option>
-                  <option value="40 Gb/s">Nível 5 — Especialista</option>
+                  <option value="1 Gb/s">Até 1 Gb/s</option>
+                  <option value="2.5 Gb/s">Até 2,5 Gb/s</option>
+                  <option value="5 Gb/s">Até 5 Gb/s</option>
+                  <option value="10 Gb/s">Até 10 Gb/s</option>
+                  <option value="40 Gb/s">Acima de 10 Gb/s</option>
                 </select>
+                <div class="form-text">Valor informado pelo responsável; não é medido pelo formulário.</div>
               </div>
 
               <div class="col-md-4">
@@ -74,14 +104,76 @@
               </div>
 
               <div class="col-md-4">
-                <label class="form-label" for="inID">ID do laudo</label>
+                <label class="form-label" for="inPeriodo">Período observado</label>
+                <input
+                  type="text"
+                  id="inPeriodo"
+                  class="form-control"
+                  maxlength="100"
+                  placeholder="Ex.: 01 a 07/10/2026"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="inResponsavel">Responsável técnico</label>
+                <input
+                  type="text"
+                  id="inResponsavel"
+                  class="form-control"
+                  maxlength="120"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="inReferencia">Referência da evidência</label>
+                <input
+                  type="text"
+                  id="inReferencia"
+                  class="form-control"
+                  maxlength="160"
+                  placeholder="Ticket, inventário ou documento interno"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="inMetodologia">Metodologia e ferramentas</label>
+                <textarea id="inMetodologia" class="form-control" rows="4" maxlength="1200" required></textarea>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="inConclusao">Conclusão</label>
+                <select id="inConclusao" class="form-select mb-3" required>
+                  <option value="" disabled selected>Selecione...</option>
+                  <option>Conforme</option>
+                  <option>Conforme com ressalvas</option>
+                  <option>Não conforme</option>
+                  <option>Não conclusiva</option>
+                </select>
+                <label class="form-label" for="inAchados">Resumo dos achados</label>
+                <textarea id="inAchados" class="form-control" rows="3" maxlength="1200" required></textarea>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="inRecomendacoes">Recomendações</label>
+                <textarea id="inRecomendacoes" class="form-control" rows="4" maxlength="1200" placeholder="Ações sugeridas, prioridade e prazo recomendado"></textarea>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="inLimitacoes">Limitações e observações</label>
+                <textarea id="inLimitacoes" class="form-control" rows="4" maxlength="1200" placeholder="Restrições de escopo, indisponibilidade de dados ou ressalvas"></textarea>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="inID">ID do relatório</label>
                 <input type="text" id="inID" class="form-control" readonly />
               </div>
             </div>
 
             <div class="mt-4 d-flex gap-2">
               <button type="button" id="btnPDF" class="btn btn-neon">
-                Gerar PDF
+                Registrar e salvar em PDF
               </button>
 
               <button
@@ -92,85 +184,88 @@
                 Imprimir
               </button>
             </div>
+            <p class="form-text mt-2 mb-0">O navegador abrirá a impressão; selecione “Salvar como PDF” para exportar o relatório.</p>
           </form>
         </div>
       </section>
     </main>
 
-    <!-- CERTIFICADO -->
+    <!-- RELATÓRIO TÉCNICO -->
     <div id="laudo-tecnico" class="cert-page">
-      <div class="cert-container d-flex flex-column h-100">
-        <header class="d-flex justify-content-between mb-5">
+      <article class="cert-container">
+        <header class="report-header">
           <div>
             <h2 class="fw-bold">LDA CyberWatch</h2>
             <small>MONITORAMENTO E SEGURANÇA DE REDES</small>
           </div>
 
           <div class="text-end">
-            <h3 class="fw-bold text-primary">LAUDO TÉCNICO</h3>
-            <small>REGISTRO DE AVALIAÇÃO</small>
+            <p class="report-kicker">RELATÓRIO TÉCNICO</p>
+            <p class="report-protocol">PROTOCOLO <strong id="outID">—</strong></p>
           </div>
         </header>
 
-        <div class="text-center my-4">
-          <h1 class="cert-title">
-            RELATÓRIO DE CAPACIDADE E DESEMPENHO DE REDE
-          </h1>
-        </div>
+        <section class="report-title-block">
+          <h1 class="cert-title">Avaliação técnica de infraestrutura</h1>
+          <p>Registro declaratório de escopo, metodologia, resultados e recomendações.</p>
+        </section>
 
-        <article class="cert-description">
-          <p>
-            Este documento registra as informações fornecidas para uma avaliação
-            técnica de infraestrutura. A capacidade indicada deve ser sustentada
-            por evidências e metodologia documentadas pelo responsável técnico;
-            a geração deste arquivo, por si só, não executa nem comprova testes
-            de carga, tráfego ou segurança.
-          </p>
-        </article>
+        <section class="report-section" aria-labelledby="report-identification-title">
+          <h2 id="report-identification-title">Identificação e escopo</h2>
+          <dl class="data-grid">
+            <div><dt>Organização</dt><dd id="outEmpresa">—</dd></div>
+            <div><dt>Sistema ou serviço</dt><dd id="outSistema">—</dd></div>
+            <div><dt>Tipo de avaliação</dt><dd id="outTipo">—</dd></div>
+            <div><dt>Escopo autorizado</dt><dd id="outEscopo">—</dd></div>
+            <div><dt>Data da avaliação</dt><dd id="outData">—</dd></div>
+            <div><dt>Período observado</dt><dd id="outPeriodo">—</dd></div>
+            <div><dt>Capacidade de referência</dt><dd id="outCapacidade">—</dd></div>
+            <div><dt>Responsável técnico</dt><dd id="outResponsavel">—</dd></div>
+            <div><dt>Referência da evidência</dt><dd id="outReferencia">—</dd></div>
+            <div><dt>Conclusão informada</dt><dd id="outConclusao">—</dd></div>
+          </dl>
+        </section>
 
-        <div class="text-center my-5">
-          <div class="performance-badge">
-            <span id="outCapacidade">---</span>
+        <section class="report-section" aria-labelledby="report-method-title">
+          <h2 id="report-method-title">Metodologia</h2>
+          <p id="outMetodologia" class="report-copy">—</p>
+        </section>
+
+        <section class="report-section" aria-labelledby="report-findings-title">
+          <h2 id="report-findings-title">Achados e recomendações</h2>
+          <div class="report-columns">
+            <div>
+              <h3>Resumo dos achados</h3>
+              <p id="outAchados" class="report-copy">—</p>
+            </div>
+            <div>
+              <h3>Próximos passos</h3>
+              <p id="outRecomendacoes" class="report-copy">—</p>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="data-grid">
-          <div><strong>EMPRESA:</strong> <span id="outEmpresa"></span></div>
-          <div><strong>DATA:</strong> <span id="outData"></span></div>
-          <div><strong>SISTEMA:</strong> <span id="outSistema"></span></div>
-          <div><strong>ID:</strong> <span id="outID"></span></div>
-        </div>
+        <section class="report-section">
+          <h2>Limitações e observações</h2>
+          <p id="outLimitacoes" class="report-copy">—</p>
+        </section>
 
-        <footer class="mt-auto pt-5">
-          <div class="row align-items-end">
-            <div class="col-8">
-              <p class="small">
-                Este registro representa os dados informados no momento da
-                emissão. Alterações na infraestrutura podem invalidar a
-                avaliação. Verificação disponível em:
-                <strong>
-                  https://luisdasartimanhas.github.io/CyberWatch/certifild/valid/
-                </strong>
-              </p>
-            </div>
+        <section class="report-disclaimer">
+          <strong>Escopo de validação:</strong> o registro público confirma apenas ID, organização, sistema, capacidade de referência e data. Os detalhes complementares deste PDF são informados pelo responsável e não são validados pelo serviço remoto.
+        </section>
 
-            <div class="col-4 text-center">
-              <div class="signature-area">
-                <div class="signature-line"></div>
-                <span class="fw-bold">RESPONSÁVEL TÉCNICO</span><br />
-                <span class="small text-muted"> Identificação conforme registro </span
-                ><br />
-                <span class="small text-primary fw-bold">
-                  LDA CyberWatch
-                </span>
-              </div>
-            </div>
+        <footer class="report-footer">
+          <p>Este documento não executa testes de rede nem substitui evidências técnicas. A conclusão deve ser interpretada dentro do escopo e das limitações registrados.</p>
+          <p>Validação do registro: <strong>luisdasartimanhas.github.io/CyberWatch/certifild/valid/</strong></p>
+          <div class="signature-area">
+            <div class="signature-line"></div>
+            <strong id="outAssinatura">Responsável técnico</strong>
+            <span>Assinatura e identificação do responsável</span>
           </div>
         </footer>
-      </div>
+      </article>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script type="module" src="../src/components/site-shell.js"></script>
     <script type="module" src="../src/js/pdfGenerator.js"></script>
   </body>

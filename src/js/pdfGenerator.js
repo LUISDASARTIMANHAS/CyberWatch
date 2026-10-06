@@ -35,6 +35,33 @@ const generateTechnicalID = () => {
 };
 
 /**
+ * Sincroniza os campos complementares com o relatório local.
+ * @returns {void}
+ */
+const syncReportDetails = () => {
+  const fieldMap = [
+    ["inTipo", "outTipo"],
+    ["inEscopo", "outEscopo"],
+    ["inPeriodo", "outPeriodo"],
+    ["inResponsavel", "outResponsavel"],
+    ["inReferencia", "outReferencia"],
+    ["inMetodologia", "outMetodologia"],
+    ["inConclusao", "outConclusao"],
+    ["inAchados", "outAchados"],
+    ["inRecomendacoes", "outRecomendacoes"],
+    ["inLimitacoes", "outLimitacoes"],
+  ];
+
+  fieldMap.forEach(([inputID, outputID]) => {
+    const value = document.getElementById(inputID).value.trim();
+    document.getElementById(outputID).textContent = value || "Não informado";
+  });
+
+  document.getElementById("outAssinatura").textContent =
+    document.getElementById("inResponsavel").value.trim();
+};
+
+/**
  * Sincroniza os dados do formulário com o certificado
  * @returns {void}
  */
@@ -47,6 +74,7 @@ const syncFields = () => {
   document.getElementById("outEmpresa").textContent = empresa;
   document.getElementById("outSistema").textContent = sistema;
   document.getElementById("outCapacidade").textContent = capacidade;
+  syncReportDetails();
 
   if (data) {
     document.getElementById("outData").textContent = data
@@ -113,54 +141,42 @@ const registerCertificate = async (certData) => {
  * Gera o PDF do certificado
  * @returns {void}
  */
-const generatePDF = () => {
+const registerAndPrintReport = async () => {
+  const form = document.getElementById("formCertificado");
+  if (!form.reportValidity()) return;
+
   syncFields();
-
   const certData = getCertData();
+  const button = document.getElementById("btnPDF");
+  button.disabled = true;
 
-  if (!certData.empresa || !certData.sistema || !certData.capacidade) {
-    showMessage(
-      "warning",
-      "Preencha todos os campos antes de gerar o certificado.",
-    );
-    return;
-  }
+  showMessage("info", "Registrando os dados principais do relatório...");
 
-  showMessage("info", "Registrando certificado no servidor...");
+  try {
+    const result = await registerCertificate(certData);
 
-  registerCertificate(certData).then((result) => {
     if (!result.success) {
       showMessage("danger", result.message);
       return;
     }
 
-    showMessage("success", result.message);
+    showMessage("success", `${result.message} Selecione “Salvar como PDF” na janela de impressão.`);
+    window.print();
+  } finally {
+    button.disabled = false;
+  }
+};
 
-    const element = document.getElementById("laudo-tecnico");
-    const oldDisplay = element.style.display;
+/**
+ * Valida e prepara o relatório para impressão local.
+ * @returns {void}
+ */
+const printReport = () => {
+  const form = document.getElementById("formCertificado");
+  if (!form.reportValidity()) return;
 
-    element.style.display = "block";
-
-    const filename = `Certificado ${certData.empresa} - ${certData.capacidade} - LDA CyberWatch.pdf`;
-
-    return html2pdf()
-      .set({
-        margin: 0,
-        filename: filename,
-        image: { type: "jpeg", quality: 1 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: {
-          unit: "mm",
-          format: "a4",
-          orientation: "landscape",
-        },
-      })
-      .from(element)
-      .save()
-      .then(() => {
-        element.style.display = oldDisplay;
-      });
-  });
+  syncFields();
+  window.print();
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -168,7 +184,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("inID").value = id;
   document.getElementById("outID").textContent = id;
+  document.getElementById("inData").value = new Date().toISOString().slice(0, 10);
 
-  document.getElementById("btnPDF").addEventListener("click", generatePDF);
-  document.getElementById("btnImprimir").addEventListener("click", () => window.print());
+  document.getElementById("btnPDF").addEventListener("click", registerAndPrintReport);
+  document.getElementById("btnImprimir").addEventListener("click", printReport);
 });

@@ -8,6 +8,7 @@ const navigationItems = [
   ["Dashboard", "dashboard/"],
   ["Sistemas", "sistemas/"],
   ["Certificados", "certifild/certificados/"],
+  ["Emitir relatório", "certifild/"],
 ];
 
 /**
@@ -74,11 +75,13 @@ function createFooter() {
   const links = createElement("nav", "d-flex flex-wrap gap-3", null, { "aria-label": "Links institucionais" });
 
   [
-    ["Privacidade", "privacidade"],
-    ["Cookies", "cookies"],
-    ["Termos", "termos"],
-  ].forEach(([label, section]) => {
-    links.appendChild(createLink(label, projectUrl(`index.html#${section}`)));
+    ["Emitir relatório", projectUrl("certifild/")],
+    ["Validar relatório", projectUrl("certifild/valid/")],
+    ["Privacidade", projectUrl("index.html#privacidade")],
+    ["Cookies", projectUrl("index.html#cookies")],
+    ["Termos", projectUrl("index.html#termos")],
+  ].forEach(([label, href]) => {
+    links.appendChild(createLink(label, href));
   });
 
   container.append(summary, links);
