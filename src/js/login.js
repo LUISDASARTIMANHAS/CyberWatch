@@ -197,8 +197,6 @@ function getCooldownUntil() {
 
 function getHeaders() {
   return {
-    "x-nonce": "string (único por requisição)",
-    "x-timestamp": new Date().getTime(),
     "Content-Type": "application/json",
     authorization: "CyberWatch2026",
   };

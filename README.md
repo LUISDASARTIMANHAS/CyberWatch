@@ -34,7 +34,7 @@ O projeto atual é uma interface estática com integrações para um serviço ex
 - HTML semântico, Bootstrap 5 e JavaScript nativo; sem bundler ou etapa de build.
 - `src/components/base/` contém builders reutilizáveis para elementos, títulos, links, botões, cards, badges e estados de interface. Texto dinâmico é configurado com `textContent`.
 - `src/components/site-shell.js` monta navegação e rodapé e resolve URLs a partir da localização do módulo, mantendo compatibilidade com publicação em subdiretório no GitHub Pages.
-- `src/js/api-client.js` centraliza o transporte HTTP e a base `/api/` atualmente utilizada. Os módulos mantêm a interpretação específica das respostas de cada endpoint.
+- `src/js/api-client.js` centraliza o transporte HTTP e a base `/api/` atualmente utilizada, gerando um `x-nonce` único e `x-timestamp` em milissegundos em cada chamada. Os módulos mantêm a interpretação específica das respostas de cada endpoint.
 - `src/css/style.css` reúne o tema, os componentes visuais, estados de foco e a preferência por movimento reduzido.
 
 ### Endpoints já configurados

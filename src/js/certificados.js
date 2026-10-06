@@ -32,8 +32,7 @@ const renderTable = (data) => {
   const tbody = document.getElementById("certTableBody");
 
   if (!data || !data.length) {
-    const cell = createElement("td", "text-center", "Nenhum certificado encontrado", { colspan: "5" });
-    tbody.replaceChildren(createElement("tr", "", null, {}, [cell]));
+    renderTableStatus("Nenhum certificado encontrado");
     return;
   }
 
@@ -48,6 +47,19 @@ const renderTable = (data) => {
   });
 
   tbody.replaceChildren(...rows);
+};
+
+/**
+ * Renderiza uma mensagem segura dentro do corpo da tabela.
+ * @param {string} message
+ * @param {string} className
+ * @returns {void}
+ */
+const renderTableStatus = (message, className = "text-center") => {
+  const cell = createElement("td", className, message, { colspan: "5" });
+  document.getElementById("certTableBody").replaceChildren(
+    createElement("tr", "", null, {}, [cell]),
+  );
 };
 
 /**
@@ -70,7 +82,7 @@ const loadCertificates = async () => {
 
     if (!response.ok) {
       showMessage("danger", message);
-      renderTable([]);
+      renderTableStatus(message, "text-center text-danger");
       return;
     }
 
@@ -79,7 +91,7 @@ const loadCertificates = async () => {
     showMessage("success", "Certificados carregados com sucesso.");
   } catch {
     showMessage("danger", "Falha de conexão com o servidor.");
-    renderTable([]);
+    renderTableStatus("Não foi possível carregar os certificados.", "text-center text-danger");
   }
 };
 
