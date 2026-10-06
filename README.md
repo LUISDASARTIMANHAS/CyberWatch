@@ -42,6 +42,32 @@ O projeto atual é uma interface estática com integrações para um serviço ex
 
 O cliente usa `https://pingobras-sg.onrender.com/api/` e conserva os caminhos existentes: `auth/request-code`, `auth/verify-code`, `crt/all`, `crt/valid` e `crt/register`. Os contratos do serviço remoto não são definidos neste repositório; mudanças de payload ou autenticação precisam ser confirmadas com o backend.
 
+### Contrato de relatório enviado pelo frontend
+
+`POST crt/register` envia um objeto JSON com os 15 campos abaixo. A atualização correspondente do backend deve persistir esses campos e devolvê-los em cada objeto de `GET crt/all` e `POST crt/valid` para que a listagem e o validador exibam os detalhes completos. A data permanece no formato `DD/MM/AAAA`, como no contrato anterior.
+
+```json
+{
+  "id": "LDA-2026-123456",
+  "empresa": "Organização avaliada",
+  "sistema": "Sistema ou serviço",
+  "tipoAvaliacao": "Disponibilidade e latência",
+  "escopo": "Ativos autorizados",
+  "capacidade": "2.5 Gb/s",
+  "data": "06/10/2026",
+  "periodo": "01 a 06/10/2026",
+  "responsavel": "Responsável técnico",
+  "referencia": "Ticket ou evidência",
+  "metodologia": "Metodologia e ferramentas",
+  "conclusao": "Conforme com ressalvas",
+  "achados": "Resumo dos achados",
+  "recomendacoes": "Próximas ações",
+  "limitacoes": "Limitações observadas"
+}
+```
+
+Até o backend persistir e retornar essas propriedades, a interface envia o objeto completo, mas registros antigos ou respostas incompletas aparecem com campos marcados como “Não informado”.
+
 ## Arquitetura recomendada para evolução
 
 1. **Agentes de coleta:** serviço leve e somente leitura, com escopo explícito, comunicação de saída autenticada e configuração assinada. Não exponha o painel de administração diretamente à rede monitorada.
