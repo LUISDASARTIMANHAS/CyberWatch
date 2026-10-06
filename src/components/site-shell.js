@@ -5,9 +5,9 @@ import { createParagraph } from "./base/paragraph.js";
 
 const projectRoot = new URL("../../", import.meta.url);
 const navigationItems = [
-  ["Dashboard", "dashboard.html"],
-  ["Sistemas", "sistemas.html"],
-  ["Certificados", "certifild/certificados.html"],
+  ["Dashboard", "dashboard/"],
+  ["Sistemas", "sistemas/"],
+  ["Certificados", "certifild/certificados/"],
 ];
 
 /**
@@ -48,7 +48,7 @@ function createHeader() {
     list.appendChild(listItem);
   });
 
-  const loginLink = createLink("Entrar", projectUrl("login.html"), "btn btn-neon ms-lg-3");
+  const loginLink = createLink("Entrar", projectUrl("login/"), "btn btn-neon ms-lg-3");
   list.appendChild(createElement("li", "nav-item", null, {}, [loginLink]));
   menu.appendChild(list);
   container.append(brand, toggle, menu);

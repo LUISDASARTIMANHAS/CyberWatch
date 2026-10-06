@@ -14,7 +14,7 @@ function protectPage() {
  */
 function redirectForbidden() {
   const projectRoot = new URL("../../", document.currentScript.src);
-  window.location.replace(new URL("sys/forbidden.html", projectRoot).href);
+  window.location.replace(new URL("sys/forbidden/", projectRoot).href);
 }
 
 /**

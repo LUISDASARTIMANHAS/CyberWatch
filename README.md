@@ -20,14 +20,14 @@ O projeto atual é uma interface estática com integrações para um serviço ex
 | Caminho | Finalidade |
 | --- | --- |
 | `index.html` | Apresentação, recursos, roadmap e informações institucionais |
-| `dashboard.html` | Indicadores ilustrativos e gráfico mensal |
-| `sistemas.html` | Inventário demonstrativo |
-| `login.html` | Solicitação e validação do código de acesso |
-| `user/index.html` | Área protegida de demonstração |
-| `sys/forbidden.html` | Estado de acesso não autorizado |
+| `dashboard/` | Indicadores ilustrativos e gráfico mensal |
+| `sistemas/` | Inventário demonstrativo |
+| `login/` | Solicitação e validação do código de acesso |
+| `user/` | Área protegida de demonstração |
+| `sys/forbidden/` | Estado de acesso não autorizado |
 | `certifild/index.html` | Emissão de documento técnico |
-| `certifild/certificados.html` | Consulta de registros |
-| `certifild/valid/index.html` | Validação de identificador |
+| `certifild/certificados/` | Consulta de registros |
+| `certifild/valid/` | Validação de identificador |
 
 ## Arquitetura atual
 

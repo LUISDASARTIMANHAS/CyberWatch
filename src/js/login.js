@@ -157,7 +157,7 @@ function unlockUI() {
  * @returns {void}
  */
 function redirectAfterLogin() {
-  window.location.replace(new URL("user/index.html", document.baseURI).href);
+  window.location.replace(new URL("../user/", document.baseURI).href);
 }
 
 /**

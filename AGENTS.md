@@ -8,9 +8,9 @@ Relevant workspace entry points:
 
 - [README.md](README.md)
 - [index.html](index.html)
-- [dashboard.html](dashboard.html)
-- [login.html](login.html)
-- [sistemas.html](sistemas.html)
+- [dashboard/index.html](dashboard/index.html)
+- [login/index.html](login/index.html)
+- [sistemas/index.html](sistemas/index.html)
 - [src/js/auth.js](src/js/auth.js)
 - [src/js/guard.js](src/js/guard.js)
 - [src/js/dashboard.js](src/js/dashboard.js)
