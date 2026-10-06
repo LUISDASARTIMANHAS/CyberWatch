@@ -25,8 +25,9 @@
         <p class="eyebrow">REGISTROS / VERIFICAÇÃO</p>
         <h1 class="neon-text">Validação de laudo técnico</h1>
         <p class="subtitulo">
-          Verifique a autenticidade de certificados emitidos pela LDA CyberWatch
+          Verifique o registro e consulte todos os campos devolvidos pela API.
         </p>
+        <p class="small text-warning">Os detalhes exibidos são públicos e correspondem aos dados retornados pelo serviço.</p>
       </header>
 
       <!-- BUSCA -->
@@ -54,27 +55,8 @@
       <section id="resultado" class="card card-futuristic p-4 d-none">
         <h2 class="h4 mb-3 neon-text">Laudo validado</h2>
 
-        <div class="row">
-          <div class="col-md-6">
-            <strong>Empresa:</strong> <span id="outEmpresa"></span>
-          </div>
-          <div class="col-md-6">
-            <strong>Sistema:</strong> <span id="outSistema"></span>
-          </div>
-          <div class="col-md-6">
-            <strong>Capacidade:</strong> <span id="outCapacidade"></span>
-          </div>
-          <div class="col-md-6">
-            <strong>Data:</strong> <span id="outData"></span>
-          </div>
-          <div class="col-md-6">
-            <strong>ID:</strong> <span id="outID"></span>
-          </div>
-          <div class="col-md-6">
-            <strong>Status:</strong>
-            <span class="text-success fw-bold">VÁLIDO</span>
-          </div>
-        </div>
+        <p><strong>Status:</strong> <span class="text-success fw-bold">VÁLIDO</span></p>
+        <dl id="certificateDetails" class="certificate-detail-grid"></dl>
 
         <hr />
 

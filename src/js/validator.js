@@ -1,4 +1,5 @@
 import { apiRequest } from "./api-client.js";
+import { createCertificateDetails } from "./certificate-schema.js";
 
 const btnValidar = document.getElementById("btnValidar");
 const inputID = document.getElementById("inID");
@@ -69,12 +70,8 @@ async function validateCertificado() {
  * @returns {void}
  */
 function showResultado(cert) {
-
-  document.getElementById("outEmpresa").textContent = cert.empresa;
-  document.getElementById("outSistema").textContent = cert.sistema;
-  document.getElementById("outCapacidade").textContent = cert.capacidade;
-  document.getElementById("outData").textContent = cert.data;
-  document.getElementById("outID").textContent = cert.id;
+  const details = createCertificateDetails(cert);
+  document.getElementById("certificateDetails").replaceChildren(...details.children);
 
   resultadoBox.classList.remove("d-none");
   notFoundBox.classList.add("d-none");

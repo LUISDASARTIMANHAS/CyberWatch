@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Consulte certificados e laudos técnicos publicados pelo LDA CyberWatch." />
+    <meta name="description" content="Consulte todos os dados dos relatórios técnicos publicados pelo LDA CyberWatch." />
     <meta name="theme-color" content="#070b12" />
 
     <title>Certificados Emitidos - LDA CyberWatch</title>
@@ -24,7 +24,8 @@
       <header class="mb-4 border-bottom pb-3">
         <p class="eyebrow">REGISTROS / CERTIFICAÇÃO</p>
         <h1 id="certificates-title" class="h3 neon-text">Certificados emitidos</h1>
-        <p class="subtitulo">Consulta de registros técnicos retornados pelo serviço de certificados.</p>
+        <p class="subtitulo">Consulte os dados completos que o serviço de certificados retornar para cada registro.</p>
+        <p class="small text-warning">Os dados desta página são públicos. Não inclua segredos ou informações pessoais desnecessárias nos relatórios.</p>
       </header>
 
       <div class="card card-futuristic border-0">
@@ -36,14 +37,14 @@
                 type="text"
                 id="searchInput"
                 class="form-control"
-                placeholder="Pesquisar por ID, empresa ou sistema..."
+                placeholder="Pesquisar em todos os dados do relatório..."
               />
             </div>
           </div>
 
           <div class="table-responsive">
             <table class="table table-dark table-hover align-middle">
-              <caption class="visually-hidden">Certificados emitidos com identificador, empresa, sistema, capacidade e data</caption>
+              <caption class="visually-hidden">Relatórios técnicos com resumo e acesso aos dados completos</caption>
               <thead>
                 <tr>
                   <th scope="col">ID</th>
@@ -51,6 +52,7 @@
                   <th scope="col">Sistema</th>
                   <th scope="col">Capacidade</th>
                   <th scope="col">Data</th>
+                  <th scope="col">Dados completos</th>
                 </tr>
               </thead>
               <tbody id="certTableBody">

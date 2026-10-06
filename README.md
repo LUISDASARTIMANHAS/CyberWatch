@@ -12,6 +12,7 @@ O projeto atual é uma interface estática com integrações para um serviço ex
 - Inventário de sistemas com estados e disponibilidade de exemplo.
 - Fluxo de autenticação por código conectado ao serviço configurado.
 - Consulta, validação e emissão de registros técnicos.
+- Gerador de relatório com escopo, metodologia, conclusão, achados e recomendações, exportado pela impressão do navegador.
 - Navegação, cabeçalho e rodapé compartilhados entre páginas.
 - Componentes de interface que inserem conteúdo remoto como texto, sem interpretá-lo como HTML.
 
@@ -109,5 +110,6 @@ Abra `http://localhost:8000`. Para produção, configure o domínio base, HTTPS 
 - O dashboard e a lista de sistemas são demonstrações, não telemetria operacional.
 - A autenticação do frontend inclui token demonstrativo em `localStorage`; a autorização precisa ser imposta pelo backend.
 - O cabeçalho `CyberWatch2026` usado pelas integrações é entregue ao navegador e não deve ser tratado como segredo. Antes de produção, remova credenciais do cliente e implemente autenticação e autorização no servidor; confirme a compatibilidade do backend antes de retirar o cabeçalho.
-- A emissão do PDF registra dados fornecidos pelo usuário; ela não executa nem comprova testes de capacidade ou segurança.
+- A API registra somente ID, empresa, sistema, capacidade e data. Os campos complementares entram no PDF impresso, mas não são persistidos nem confirmados na validação pública.
+- O relatório é exportado pela impressão do navegador (destino “Salvar como PDF”); ele não executa nem comprova testes de capacidade ou segurança.
 - Publique políticas de privacidade, cookies e termos revisadas para a operação real. Os textos exibidos no protótipo são avisos informativos, não aconselhamento jurídico.

@@ -1,4 +1,5 @@
 import { createElement } from "../components/base/dom-utils.js";
+import { CERTIFICATE_FIELDS, readCertificateForm } from "./certificate-schema.js";
 import { apiRequest } from "./api-client.js";
 const API_KEY = "CyberWatch2026";
 
@@ -39,26 +40,15 @@ const generateTechnicalID = () => {
  * @returns {void}
  */
 const syncReportDetails = () => {
-  const fieldMap = [
-    ["inTipo", "outTipo"],
-    ["inEscopo", "outEscopo"],
-    ["inPeriodo", "outPeriodo"],
-    ["inResponsavel", "outResponsavel"],
-    ["inReferencia", "outReferencia"],
-    ["inMetodologia", "outMetodologia"],
-    ["inConclusao", "outConclusao"],
-    ["inAchados", "outAchados"],
-    ["inRecomendacoes", "outRecomendacoes"],
-    ["inLimitacoes", "outLimitacoes"],
-  ];
+  const certificate = readCertificateForm();
 
-  fieldMap.forEach(([inputID, outputID]) => {
-    const value = document.getElementById(inputID).value.trim();
-    document.getElementById(outputID).textContent = value || "Não informado";
+  CERTIFICATE_FIELDS.forEach(({ key, outputId }) => {
+    const output = document.getElementById(outputId);
+    if (output) output.textContent = certificate[key] || "Não informado";
   });
 
   document.getElementById("outAssinatura").textContent =
-    document.getElementById("inResponsavel").value.trim();
+    certificate.responsavel || "Não informado";
 };
 
 /**
@@ -89,15 +79,7 @@ const syncFields = () => {
  * @returns {Object}
  */
 const getCertData = () => {
-  const dataInput = document.getElementById("inData").value;
-
-  return {
-    id: document.getElementById("inID").value,
-    empresa: document.getElementById("inEmpresa").value.trim(),
-    sistema: document.getElementById("inSistema").value.trim(),
-    capacidade: document.getElementById("inCapacidade").value.trim(),
-    data: dataInput ? dataInput.split("-").reverse().join("/") : "",
-  };
+  return readCertificateForm();
 };
 
 /**
@@ -150,7 +132,7 @@ const registerAndPrintReport = async () => {
   const button = document.getElementById("btnPDF");
   button.disabled = true;
 
-  showMessage("info", "Registrando os dados principais do relatório...");
+  showMessage("info", "Registrando todos os dados do relatório...");
 
   try {
     const result = await registerCertificate(certData);

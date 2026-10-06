@@ -302,6 +302,45 @@ a:hover {
   font-size: 0.875rem;
 }
 
+.certificate-details summary {
+  color: var(--cw-accent);
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.certificate-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem 1.25rem;
+  margin: 1rem 0 0;
+}
+
+.certificate-detail-item {
+  min-width: 0;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(169, 186, 198, 0.2);
+}
+
+.certificate-detail-item dt {
+  margin-bottom: 0.2rem;
+  color: var(--cw-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.certificate-detail-item dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 575.98px) {
+  .certificate-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .navbar-glass {
   position: relative;
   z-index: 10;

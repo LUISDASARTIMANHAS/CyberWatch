@@ -1,5 +1,6 @@
 import { createBadge } from "../components/base/badge.js";
 import { createElement } from "../components/base/dom-utils.js";
+import { CERTIFICATE_FIELDS, createCertificateDetails } from "./certificate-schema.js";
 import { apiRequest } from "./api-client.js";
 const API_KEY = "CyberWatch2026";
 
@@ -43,6 +44,12 @@ const renderTable = (data) => {
       const content = index === 3 ? createBadge(text, "badge text-bg-info") : createElement("span", "", text);
       return createElement("td", "", null, {}, [content]);
     });
+
+    const details = createElement("details", "certificate-details", null, {}, [
+      createElement("summary", "", "Ver dados completos"),
+      createCertificateDetails(cert),
+    ]);
+    cells.push(createElement("td", "", null, {}, [details]));
     return createElement("tr", "", null, {}, cells);
   });
 
@@ -56,7 +63,7 @@ const renderTable = (data) => {
  * @returns {void}
  */
 const renderTableStatus = (message, className = "text-center") => {
-  const cell = createElement("td", className, message, { colspan: "5" });
+  const cell = createElement("td", className, message, { colspan: "6" });
   document.getElementById("certTableBody").replaceChildren(
     createElement("tr", "", null, {}, [cell]),
   );
@@ -106,8 +113,9 @@ const filterCertificates = (term) => {
   if (!window.certCache) return;
 
   const filtered = window.certCache.filter((cert) =>
-    [cert.id, cert.empresa, cert.sistema]
-      .some((value) => String(value || "").toLowerCase().includes(term))
+    CERTIFICATE_FIELDS.some(({ key }) =>
+      String(cert[key] ?? "").toLowerCase().includes(term)
+    )
   );
 
   renderTable(filtered);
