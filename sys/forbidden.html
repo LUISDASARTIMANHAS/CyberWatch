@@ -1,31 +1,32 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.7" />
-    <link rel="stylesheet" href="/src/css/forbidden.css" />
-
-    <seo>
-      <meta name="robots" content="index,follow" />
-      <meta property="og:title" content="Acesso não autorizado" />
-      <meta property="og:type" content="article" />
-      <meta property="og:url" content="403 Forbidden" />
-      <meta property="og:description" content="OG SEO." />
-      <meta name="twitter:card" content="summary" />
-    </seo>
-    <title>Acesso não autorizado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Sua sessão não tem autorização para acessar este recurso." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#070b12" />
+    <title>Acesso não autorizado – LDA CyberWatch</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <link rel="stylesheet" href="../src/css/forbidden.css" />
   </head>
-  <body>
-    <div class="container">
-      <h1>Acesso não autorizado</h1>
-      <h2 vermelho>403 Forbidden</h2>
-      <p>Você não possui permissão para acessar esta página.</p>
-      <p vermelho>
-        O cliente não tem direitos de acesso ao conteúdo, portanto, o servidor
-        está rejeitando dar uma resposta. Diferente do código 401, aqui a
-        identidade do cliente é conhecida.
-      </p>
-      <p><a href="/">Voltar à página inicial</a></p>
-    </div>
+  <body class="bg-dark text-light">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <main class="container min-vh-100 d-flex align-items-center justify-content-center py-5">
+      <section class="forbidden-panel text-center" aria-labelledby="forbidden-title">
+        <p class="eyebrow">CONTROLE DE ACESSO</p>
+        <p class="forbidden-code mb-2" aria-hidden="true">403</p>
+        <h1 id="forbidden-title" class="h2 neon-text">Acesso não autorizado</h1>
+        <p class="subtitulo">Sua sessão não tem permissão para abrir este recurso. Entre com uma conta autorizada ou retorne à página inicial.</p>
+        <a class="btn btn-neon mt-3" href="../login.html">Entrar novamente</a>
+      </section>
+    </main>
+    <script type="module" src="../src/components/site-shell.js"></script>
   </body>
 </html>

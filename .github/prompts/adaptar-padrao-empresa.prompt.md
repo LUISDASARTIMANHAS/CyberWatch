@@ -9,18 +9,60 @@ Adapte todas as páginas e integrações existentes deste projeto web ao padrão
 
 ## Referências
 
-- Use como referência padrão os componentes em `D:\Projetos Temporarios\PINGOBRAS\src\components\base` e o `api-client.js` desse projeto, se estiverem acessíveis.
+- Use como referência padrão os componentes em `D:\Projetos Temporarios\PINGOBRAS\src\components\base`, os componentes compartilhados em `D:\Projetos Temporarios\PINGOBRAS\src\components` e o `api-client.js` desse projeto, se estiverem acessíveis.
+## Inventário obrigatório
+
+Verifique todos os itens abaixo no projeto atual. Se algum estiver ausente, crie-o seguindo a implementação de referência quando acessível e adaptando-a à arquitetura, aos caminhos e ao formato JavaScript já usados pelo projeto. Não omita um item obrigatório só porque ele ainda não é importado por uma página. Não sobrescreva implementações válidas: ajuste-as apenas quando necessário para compatibilidade com o padrão.
+
+Em `src/components/base`, mantenha/crie:
+
+- `alert.js`
+- `badge.js`
+- `button.js`
+- `card.js`
+- `cardBody.js`
+- `dom-utils.js`
+- `emptyState.js`
+- `errorState.js`
+- `heading.js`
+- `image.js`
+- `link.js`
+- `list.js`
+- `listItem.js`
+- `loading.js`
+- `paginationItem.js`
+- `paginationLink.js`
+- `paragraph.js`
+- `spinner.js`
+- `strong.js`
+
+Em `src/components`, verifique/crie os componentes compartilhados:
+
+- `cookies.html`
+- `footer.html`
+- `head.html`
+- `loading.html`
+- `modal.html`
+- `navbar.html`
+- `privacy-banner.html`
+- `scripts.html`
+- `search-modal.html`
+- `toast.html`
+
+Verifique também `src/js/api-client.js`. Se estiver ausente, crie um cliente centralizado compatível com os endpoints e configurações já confirmados no projeto; não invente URLs, endpoints, credenciais ou contratos de resposta. Se a referência externa não estiver acessível, implemente os componentes ausentes com comportamento mínimo, semântico, acessível e coerente com seus nomes e com os padrões verificáveis no workspace, e relate as suposições.
+
+## Fluxo
 - Considere os arquivos e requisitos fornecidos em `$ARGUMENTS` como substituições ou complementos dessas referências.
 - O diretório de referência é somente leitura: não altere o projeto de origem.
 - A listagem de nomes de arquivos não define contratos. Leia as implementações reais antes de reproduzi-las ou integrá-las. Se a referência não estiver acessível, não invente seu conteúdo; informe a limitação e use apenas padrões verificáveis no workspace.
 
 ## Fluxo
 
-1. Leia as instruções aplicáveis, o README e os pontos de entrada do projeto. Localize as páginas, scripts, estilos, integrações HTTP e padrões de interface existentes.
+1. Leia as instruções aplicáveis, o README e os pontos de entrada do projeto. Localize as páginas, scripts, estilos, integrações HTTP e padrões de interface existentes. Compare a árvore de arquivos com o inventário obrigatório e registre os itens ausentes.
 2. Inspecione os componentes de referência e o `api-client.js`. Identifique suas assinaturas, dependências, comportamento, convenções de importação e tratamento de erros.
 3. Compare esses contratos com a arquitetura atual e defina uma migração coerente para todo o projeto. Preserve funcionalidades e APIs públicas existentes; padronize todas as páginas e integrações existentes sem reescrever partes que já atendam ao padrão.
 4. Implemente os componentes reutilizáveis e a integração compartilhada de API nos locais e formatos compatíveis com o projeto. Atualize todas as páginas e usos existentes necessários para concluir a migração.
-5. Valide a mudança com as verificações disponíveis no repositório. Confira também referências de arquivos, carregamento de scripts e comportamento de caminhos em subdiretórios.
+5. Confirme que todos os itens do inventário obrigatório existem e valide a mudança com as verificações disponíveis no repositório. Confira também referências de arquivos, carregamento de scripts e comportamento de caminhos em subdiretórios.
 
 ## Restrições técnicas
 

@@ -5,21 +5,26 @@
   <title>Login – LDA CyberWatch</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Acesse sua área do LDA CyberWatch." />
+  <meta name="theme-color" content="#070b12" />
 
   <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
     rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+    crossorigin="anonymous"
   />
   <link rel="stylesheet" href="src/css/style.css" />
 </head>
 
-<body class="bg-dark text-light vh-100">
+<body class="bg-dark text-light min-vh-100 d-flex flex-column">
   <div class="grid-bg" aria-hidden="true"></div>
 
-  <main class="container h-100 d-flex justify-content-center align-items-center">
+  <main class="container flex-grow-1 d-flex justify-content-center align-items-center py-5">
     <section class="card card-futuristic p-4 login-card" aria-labelledby="login-title">
 
       <header>
+        <p class="eyebrow text-center">ÁREA DO CLIENTE</p>
         <h1 id="login-title" class="text-center neon-text mb-3">
           Acesso Seguro
         </h1>
@@ -77,12 +82,14 @@
 
         <p id="status" class="text-center mt-3 small" aria-live="polite"></p>
       </form>
+      <p class="small text-secondary text-center mt-3 mb-0">A autenticação deste protótipo depende do serviço de API configurado.</p>
     </section>
   </main>
 
+  <script type="module" src="./src/components/site-shell.js"></script>
   <script src="src/js/particles.js"></script>
   <script src="src/js/cooldown.js"></script>
   <script src="src/js/auth.js"></script>
-  <script src="src/js/login.js"></script>
+  <script type="module" src="src/js/login.js"></script>
 </body>
 </html>

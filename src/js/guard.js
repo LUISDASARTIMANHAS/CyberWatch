@@ -13,7 +13,8 @@ function protectPage() {
  * @returns {void}
  */
 function redirectForbidden() {
-  window.location.replace("/sys/forbidden.html");
+  const projectRoot = new URL("../../", document.currentScript.src);
+  window.location.replace(new URL("sys/forbidden.html", projectRoot).href);
 }
 
 /**

@@ -1,4 +1,5 @@
-const API_BASE = "https://pingobras-sg.onrender.com/api/crt";
+import { createElement } from "../components/base/dom-utils.js";
+import { apiRequest } from "./api-client.js";
 const API_KEY = "CyberWatch2026";
 
 /**
@@ -16,12 +17,11 @@ const showMessage = (type, message) => {
     return;
   }
 
-  box.innerHTML = `
-    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-      ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-  `;
+  const alert = createElement("div", `alert alert-${type} alert-dismissible fade show`, null, { role: "alert" });
+  const closeButton = createElement("button", "btn-close", null, { type: "button", "aria-label": "Fechar mensagem" });
+  closeButton.addEventListener("click", () => alert.remove());
+  alert.append(createElement("span", "", String(message)), closeButton);
+  box.replaceChildren(alert);
 };
 
 /**
@@ -84,51 +84,29 @@ const getCertData = () => {
  * @param {Object} certData
  * @returns {Promise<{success:boolean,message:string}>}
  */
-const registerCertificate = (certData) => {
-  return fetch(`${API_BASE}/register`, {
+const registerCertificate = async (certData) => {
+  try {
+    const response = await apiRequest("crt/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       authorization: API_KEY,
     },
     body: JSON.stringify(certData),
-  })
-    .then((res) => {
-      return res.text().then((text) => ({
-        ok: res.ok,
-        text,
-      }));
-    })
-    .then(({ ok, text }) => {
-      let message = "Erro desconhecido";
-
-      try {
-        const json = JSON.parse(text);
-
-        // 🔥 Aqui está a correção
-        message = json.message || json.error || message;
-      } catch {
-        message = text || message;
-      }
-
-      if (!ok) {
-        return {
-          success: false,
-          message,
-        };
-      }
-
-      return {
-        success: true,
-        message: message || "Certificado registrado com sucesso.",
-      };
-    })
-    .catch(() => {
-      return {
-        success: false,
-        message: "Falha de conexão com o servidor.",
-      };
     });
+
+    const payload = response.data;
+    const message = payload && typeof payload === "object"
+      ? payload.message || payload.error || ""
+      : String(payload || "");
+
+    return {
+      success: response.ok,
+      message: message || (response.ok ? "Certificado registrado com sucesso." : "Erro ao registrar certificado."),
+    };
+  } catch {
+    return { success: false, message: "Falha de conexão com o servidor." };
+  }
 };
 
 /**
@@ -192,4 +170,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("outID").textContent = id;
 
   document.getElementById("btnPDF").addEventListener("click", generatePDF);
+  document.getElementById("btnImprimir").addEventListener("click", () => window.print());
 });

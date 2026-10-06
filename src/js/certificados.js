@@ -1,4 +1,6 @@
-const API_BASE = "https://pingobras-sg.onrender.com/api/crt";
+import { createBadge } from "../components/base/badge.js";
+import { createElement } from "../components/base/dom-utils.js";
+import { apiRequest } from "./api-client.js";
 const API_KEY = "CyberWatch2026";
 
 /**
@@ -10,18 +12,14 @@ const API_KEY = "CyberWatch2026";
  */
 const showMessage = (type, message) => {
   const box = document.getElementById("msgBox");
+  if (!box) return;
 
-  if (!box) {
-    alert(message);
-    return;
-  }
-
-  box.innerHTML = `
-    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-      ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-  `;
+  const allowedTypes = ["success", "danger", "warning", "info"];
+  const alert = createElement("div", `alert alert-${allowedTypes.includes(type) ? type : "info"} alert-dismissible fade show`, null, { role: "alert" });
+  const closeButton = createElement("button", "btn-close", null, { type: "button", "aria-label": "Fechar mensagem" });
+  closeButton.addEventListener("click", () => alert.remove());
+  alert.append(createElement("span", "", String(message)), closeButton);
+  box.replaceChildren(alert);
 };
 
 /**
@@ -34,24 +32,22 @@ const renderTable = (data) => {
   const tbody = document.getElementById("certTableBody");
 
   if (!data || !data.length) {
-    tbody.innerHTML =
-      `<tr><td colspan="5" class="text-center">Nenhum certificado encontrado</td></tr>`;
+    const cell = createElement("td", "text-center", "Nenhum certificado encontrado", { colspan: "5" });
+    tbody.replaceChildren(createElement("tr", "", null, {}, [cell]));
     return;
   }
 
-  tbody.innerHTML = data
-    .map(
-      (cert) => `
-        <tr>
-          <td>${cert.id}</td>
-          <td>${cert.empresa}</td>
-          <td>${cert.sistema}</td>
-          <td>${cert.capacidade}</td>
-          <td>${cert.data}</td>
-        </tr>
-      `
-    )
-    .join("");
+  const rows = data.map((cert) => {
+    const values = [cert.id, cert.empresa, cert.sistema, cert.capacidade, cert.data];
+    const cells = values.map((value, index) => {
+      const text = value == null ? "—" : String(value);
+      const content = index === 3 ? createBadge(text, "badge text-bg-info") : createElement("span", "", text);
+      return createElement("td", "", null, {}, [content]);
+    });
+    return createElement("tr", "", null, {}, cells);
+  });
+
+  tbody.replaceChildren(...rows);
 };
 
 /**
@@ -59,51 +55,32 @@ const renderTable = (data) => {
  *
  * @returns {void}
  */
-const loadCertificates = () => {
-
+const loadCertificates = async () => {
   showMessage("info", "Carregando certificados...");
 
-  fetch(`${API_BASE}/all`, {
-    method: "GET",
-    headers: {
-      authorization: API_KEY
-    }
-  })
-    .then((res) => {
-      return res.text().then((text) => ({
-        ok: res.ok,
-        text
-      }));
-    })
-    .then(({ ok, text }) => {
-
-      let data;
-      let message = "Erro ao carregar certificados";
-
-      try {
-        data = JSON.parse(text);
-        message = data.message || data.error || message;
-      } catch {
-        message = text || message;
-      }
-
-      if (!ok) {
-        showMessage("danger", message);
-        document.getElementById("certTableBody").innerHTML =
-          `<tr><td colspan="5" class="text-center text-danger">${message}</td></tr>`;
-        return;
-      }
-
-      window.certCache = Array.isArray(data) ? data : [];
-
-      renderTable(window.certCache);
-      showMessage("success", "Certificados carregados com sucesso.");
-    })
-    .catch(() => {
-      showMessage("danger", "Falha de conexão com o servidor.");
-      document.getElementById("certTableBody").innerHTML =
-        `<tr><td colspan="5" class="text-center text-danger">Erro de conexão</td></tr>`;
+  try {
+    const response = await apiRequest("crt/all", {
+      method: "GET",
+      headers: { authorization: API_KEY },
     });
+    const payload = response.data;
+    const message = payload && typeof payload === "object"
+      ? payload.message || payload.error || "Erro ao carregar certificados"
+      : String(payload || "Erro ao carregar certificados");
+
+    if (!response.ok) {
+      showMessage("danger", message);
+      renderTable([]);
+      return;
+    }
+
+    window.certCache = Array.isArray(payload) ? payload : [];
+    renderTable(window.certCache);
+    showMessage("success", "Certificados carregados com sucesso.");
+  } catch {
+    showMessage("danger", "Falha de conexão com o servidor.");
+    renderTable([]);
+  }
 };
 
 /**
@@ -116,10 +93,9 @@ const filterCertificates = (term) => {
 
   if (!window.certCache) return;
 
-  const filtered = window.certCache.filter(cert =>
-    cert.id.toLowerCase().includes(term) ||
-    cert.empresa.toLowerCase().includes(term) ||
-    cert.sistema.toLowerCase().includes(term)
+  const filtered = window.certCache.filter((cert) =>
+    [cert.id, cert.empresa, cert.sistema]
+      .some((value) => String(value || "").toLowerCase().includes(term))
   );
 
   renderTable(filtered);

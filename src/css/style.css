@@ -147,3 +147,189 @@ body,
     transform: scale(0.3) translateY(-20px);
   }
 }
+
+:root {
+  color-scheme: dark;
+  --cw-bg: #070b12;
+  --cw-panel: #101923;
+  --cw-line: rgba(0, 234, 255, 0.28);
+  --cw-muted: #a9bac6;
+  --cw-accent: #00eaff;
+  --cw-green: #71e0b2;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body,
+.bg-dark {
+  min-height: 100vh;
+  background-color: var(--cw-bg) !important;
+  color: #edf7fa;
+  font-family: "Segoe UI", sans-serif;
+}
+
+::selection {
+  background: rgba(0, 234, 255, 0.3);
+  color: #fff;
+}
+
+a {
+  color: #9deeff;
+}
+
+a:hover {
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cw-accent);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 1100;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.65rem 1rem;
+  color: #061014;
+  background: var(--cw-accent);
+  border-radius: 4px;
+}
+
+.hero-section {
+  max-width: 980px;
+  margin-top: clamp(2rem, 7vh, 5rem);
+}
+
+.hero-copy {
+  max-width: 760px;
+  color: #c5d4dc;
+}
+
+.eyebrow,
+.module-index {
+  color: var(--cw-green);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.section-heading {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.section-heading h2,
+.workflow-list strong {
+  color: var(--cw-accent);
+}
+
+.card-futuristic {
+  border-color: var(--cw-line);
+  border-radius: 6px;
+  background: linear-gradient(145deg, rgba(16, 25, 35, 0.96), rgba(9, 16, 25, 0.96));
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(10px);
+}
+
+.card-futuristic h3,
+.card-futuristic h4 {
+  color: #b9f6ff;
+}
+
+.card-futuristic:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(0, 234, 255, 0.1);
+}
+
+.workflow-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workflow-list li,
+.roadmap-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border-left: 2px solid var(--cw-accent);
+  background: rgba(16, 25, 35, 0.68);
+}
+
+.workflow-list li {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.workflow-list span,
+.roadmap-item p,
+.subtitulo {
+  color: var(--cw-muted);
+}
+
+.roadmap-item > span {
+  color: var(--cw-green);
+  font: 700 0.8rem/1.5 "Segoe UI", sans-serif;
+}
+
+.roadmap-item h3 {
+  color: #eaf8fb;
+}
+
+.roadmap-item p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.legal-section {
+  border-top: 1px solid var(--cw-line);
+}
+
+.site-footer {
+  border-top: 1px solid var(--cw-line);
+  background: rgba(4, 8, 14, 0.8);
+}
+
+.site-footer nav {
+  font-size: 0.875rem;
+}
+
+.navbar-glass {
+  position: relative;
+  z-index: 10;
+  background: rgba(10, 15, 23, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+.navbar .nav-link[aria-current="page"] {
+  color: #fff !important;
+  box-shadow: inset 0 -2px var(--cw-accent);
+}
+
+.btn-neon {
+  border: 1px solid var(--cw-accent);
+  border-radius: 4px;
+}
+
+.btn-neon:hover {
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

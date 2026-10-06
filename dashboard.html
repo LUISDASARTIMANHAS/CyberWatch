@@ -3,37 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <title>Dashboard – LDA CyberWatch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Acompanhe indicadores demonstrativos de risco e vulnerabilidades no CyberWatch." />
+    <meta name="theme-color" content="#070b12" />
 
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
     />
     <link rel="stylesheet" href="src/css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
   </head>
 
   <body class="bg-dark text-light">
     <div class="grid-bg"></div>
 
-    <!-- NAV -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-glass px-3">
-      <a class="navbar-brand neon-text" href="index.html">LDA CyberWatch</a>
-      <div class="ms-auto">
-        <a href="login.html" class="nav-link neon-link">Login</a>
+    <main class="container py-5" aria-labelledby="dashboard-title">
+      <header class="section-heading text-center mb-4">
+        <p class="eyebrow">VISÃO GERAL / AMBIENTE DE DEMONSTRAÇÃO</p>
+        <h1 id="dashboard-title" class="titulo neon-text mb-3">Painel de exposição</h1>
+        <p class="subtitulo mb-0">Série ilustrativa de ocorrências por severidade. Não representa telemetria de ativos reais.</p>
+      </header>
+
+      <div class="row g-3 mb-4" aria-label="Indicadores ilustrativos">
+        <div class="col-sm-4"><article class="card card-futuristic p-3 h-100"><p class="module-index mb-2">CRÍTICAS</p><p class="h3 mb-1 text-danger">5</p><p class="small mb-0">Amostra do período</p></article></div>
+        <div class="col-sm-4"><article class="card card-futuristic p-3 h-100"><p class="module-index mb-2">EM ANÁLISE</p><p class="h3 mb-1 text-warning">14</p><p class="small mb-0">Amostra do período</p></article></div>
+        <div class="col-sm-4"><article class="card card-futuristic p-3 h-100"><p class="module-index mb-2">BAIXAS</p><p class="h3 mb-1 text-success">22</p><p class="small mb-0">Amostra do período</p></article></div>
       </div>
-    </nav>
 
-    <section class="container py-5">
-      <h2 class="titulo text-center mb-4 neon-text">Dashboard Interativo</h2>
-      <p class="text-center subtitulo mb-4">
-        Acompanhe vulnerabilidades detectadas ao longo do tempo.
-      </p>
+      <section class="card card-futuristic p-3 p-md-4" aria-labelledby="chart-title">
+        <h2 id="chart-title" class="h5 neon-text">Ocorrências por severidade</h2>
+        <div class="position-relative" style="height: min(55vh, 420px); min-height: 280px">
+          <canvas id="graficoVulns" role="img" aria-label="Gráfico de linha com ocorrências mensais divididas por severidade"></canvas>
+        </div>
+      </section>
+    </main>
 
-      <div class="card card-futuristic p-4">
-        <canvas id="graficoVulns" height="120"></canvas>
-      </div>
-    </section>
-
+    <script type="module" src="src/components/site-shell.js"></script>
     <script src="src/js/dashboard.js"></script>
   </body>
 </html>

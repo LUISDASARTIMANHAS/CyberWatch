@@ -1,38 +1,15 @@
-[vermelho] {
-  color: red;
-}
-body {
-  background-color: #f1f1f1;
-  background-image: url("https://cdn.dribbble.com/users/134564/screenshots/4575057/kriptown-illu-animation403_clean.gif");
-  background-size: cover;
-  font-family: Arial, sans-serif;
-  background-attachment: fixed;
-  background-position: bottom;
-  background-repeat: no-repeat;
-  overflow: hidden;
+.forbidden-panel {
+  max-width: 760px;
+  margin: auto;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid rgba(255, 91, 91, 0.45);
+  border-radius: 6px;
+  background: rgba(15, 20, 29, 0.94);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
-.container {
-  width: 75%;
-  min-width: 25%;
-  margin: 150px auto;
-  padding: 10px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-h1,
-h2 {
-  text-align: center;
-}
-
-p {
-  text-align: center;
-  margin-top: 20px;
-}
-
-a {
-  text-decoration: none;
-  color: #007bff;
+.forbidden-code {
+  color: #ff7777;
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 800;
 }

@@ -1,10 +1,11 @@
+import { apiRequest } from "./api-client.js";
+
 const form = document.getElementById("login-form");
 const stepEmail = document.getElementById("step-email");
 const stepCode = document.getElementById("step-code");
 const statusLabel = document.getElementById("status");
 const submitButton = form.querySelector("button[type='submit']");
 
-const API_BASE = "https://pingobras-sg.onrender.com/api/auth";
 const EMAIL_COOLDOWN_SEG = 60;
 const COOLDOWN_KEY = "magiclink_cooldown_until";
 
@@ -59,7 +60,7 @@ async function sendEmail() {
   lockUI("Enviando código...");
 
   try {
-    const res = await fetch(`${API_BASE}/request-code`, {
+    const res = await apiRequest("auth/request-code", {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify({ email: emailInput.value.trim() }),
@@ -94,7 +95,7 @@ async function verifyCode() {
   lockUI("Verificando código...");
 
   try {
-    const res = await fetch(`${API_BASE}/verify-code`, {
+    const res = await apiRequest("auth/verify-code", {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify({
@@ -156,7 +157,7 @@ function unlockUI() {
  * @returns {void}
  */
 function redirectAfterLogin() {
-  window.location.replace("/");
+  window.location.replace(new URL("user/index.html", document.baseURI).href);
 }
 
 /**

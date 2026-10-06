@@ -1,5 +1,4 @@
-// const API_BASE = "http://localhost:3000/api/crt";
-const API_BASE = "https://pingobras-sg.onrender.com/api/crt";
+import { apiRequest } from "./api-client.js";
 
 const btnValidar = document.getElementById("btnValidar");
 const inputID = document.getElementById("inID");
@@ -34,7 +33,7 @@ async function validateCertificado() {
   lockUI();
 
   try {
-    const res = await fetch(`${API_BASE}/valid`, {
+    const res = await apiRequest("crt/valid", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,11 +47,9 @@ async function validateCertificado() {
       return;
     }
 
-    if (!res.ok) throw new Error();
+    if (!res.ok || !res.data || typeof res.data !== "object") throw new Error();
 
-    const data = await res.json();
-
-    showResultado(data);
+    showResultado(res.data);
 
   } catch {
     showNotFound();

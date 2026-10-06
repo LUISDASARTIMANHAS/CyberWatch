@@ -2,13 +2,30 @@
 <html lang="pt-BR">
 <head>
 	<meta charset="UTF-8" />
-	<title>Página Protegida</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Área autenticada do LDA CyberWatch." />
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="theme-color" content="#070b12" />
+	<title>Área do usuário – LDA CyberWatch</title>
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+		crossorigin="anonymous"
+	/>
+	<link rel="stylesheet" href="../src/css/style.css" />
 </head>
-<body>
-	<main>
-		<h1>Área restrita</h1>
+	<body class="bg-dark text-light">
+	<div class="grid-bg" aria-hidden="true"></div>
+	<main class="container py-5" aria-labelledby="user-title">
+		<section class="card card-futuristic p-4">
+			<p class="eyebrow">SESSÃO AUTENTICADA</p>
+			<h1 id="user-title" class="h3 neon-text">Área do usuário</h1>
+			<p class="subtitulo mb-0">Sua sessão foi reconhecida neste protótipo. Os dados e permissões devem ser validados pelo serviço de backend em produção.</p>
+		</section>
 	</main>
 
+	<script type="module" src="../src/components/site-shell.js"></script>
 	<script src="../src/js/auth.js"></script>
 	<script src="../src/js/guard.js"></script>
 </body>

@@ -1,118 +1,113 @@
-# CyberWatch
-O projeto LDA CyberWatch consiste em uma plataforma gratuita de monitoramento de rede e cibersegurança voltada para usuários domésticos, pequenos provedores e administradores independentes. Seu objetivo é identificar riscos, acompanhar a saúde da infraestrutura e fornecer relatórios acessíveis sobre vulnerabilidades, exposição de serviços e possíveis ataques.
+# LDA CyberWatch
 
-A solução combina ferramentas leves de análise com automação, notificações proativas e auditorias básicas de segurança, permitindo uma visão clara do ambiente monitorado. A proposta também inclui uma interface futurista e responsiva, projetada para apresentar informações técnicas de forma simples e objetiva.
+**Visibilidade para sua infraestrutura. Decisões mais claras para sua segurança.**
 
-Além do monitoramento contínuo, o projeto oferece relatórios detalhados sobre portas abertas, falhas de configuração, incidentes registrados e possíveis explorações baseadas em CVEs recentes. Por ser gratuito, o serviço funciona como uma alternativa acessível para quem deseja melhorar a postura de segurança sem custos.
+O LDA CyberWatch é um protótipo de plataforma web para organizar indicadores de disponibilidade, exposição e segurança de redes. Foi pensado para usuários domésticos, pequenos provedores e administradores independentes que precisam entender o que merece atenção sem depender de uma equipe especializada.
 
-A longo prazo, o projeto busca evoluir para incluir dashboards avançados, API própria, métricas em tempo real e integração com sistemas externos.
+O projeto atual é uma interface estática com integrações para um serviço externo. As métricas do dashboard são ilustrativas; o site não executa varreduras ou testes de rede por conta própria.
 
+## Funcionalidades
 
+- Painel demonstrativo de ocorrências por severidade.
+- Inventário de sistemas com estados e disponibilidade de exemplo.
+- Fluxo de autenticação por código conectado ao serviço configurado.
+- Consulta, validação e emissão de registros técnicos.
+- Navegação, cabeçalho e rodapé compartilhados entre páginas.
+- Componentes de interface que inserem conteúdo remoto como texto, sem interpretá-lo como HTML.
 
-Quero que você melhore, expanda e aperfeiçoe um projeto existente chamado LDA CyberWatch.
+## Páginas
 
-A seguir está a descrição completa do sistema, seus objetivos e o estilo necessário:
+| Caminho | Finalidade |
+| --- | --- |
+| `index.html` | Apresentação, recursos, roadmap e informações institucionais |
+| `dashboard.html` | Indicadores ilustrativos e gráfico mensal |
+| `sistemas.html` | Inventário demonstrativo |
+| `login.html` | Solicitação e validação do código de acesso |
+| `user/index.html` | Área protegida de demonstração |
+| `sys/forbidden.html` | Estado de acesso não autorizado |
+| `certifild/index.html` | Emissão de documento técnico |
+| `certifild/certificados.html` | Consulta de registros |
+| `certifild/valid/index.html` | Validação de identificador |
 
-📌 Sobre o projeto
+## Arquitetura atual
 
-O LDA CyberWatch é uma plataforma gratuita de monitoramento de rede e cibersegurança voltada para:
+- HTML semântico, Bootstrap 5 e JavaScript nativo; sem bundler ou etapa de build.
+- `src/components/base/` contém builders reutilizáveis para elementos, títulos, links, botões, cards, badges e estados de interface. Texto dinâmico é configurado com `textContent`.
+- `src/components/site-shell.js` monta navegação e rodapé e resolve URLs a partir da localização do módulo, mantendo compatibilidade com publicação em subdiretório no GitHub Pages.
+- `src/js/api-client.js` centraliza o transporte HTTP e a base `/api/` atualmente utilizada. Os módulos mantêm a interpretação específica das respostas de cada endpoint.
+- `src/css/style.css` reúne o tema, os componentes visuais, estados de foco e a preferência por movimento reduzido.
 
-usuários domésticos,
+### Endpoints já configurados
 
-pequenos provedores,
+O cliente usa `https://pingobras-sg.onrender.com/api/` e conserva os caminhos existentes: `auth/request-code`, `auth/verify-code`, `crt/all`, `crt/valid` e `crt/register`. Os contratos do serviço remoto não são definidos neste repositório; mudanças de payload ou autenticação precisam ser confirmadas com o backend.
 
-administradores independentes.
+## Arquitetura recomendada para evolução
 
-O foco do sistema é mapear riscos, acompanhar a saúde da infraestrutura, detectar vulnerabilidades e apresentar análises de forma simples, técnica e visualmente moderna.
+1. **Agentes de coleta:** serviço leve e somente leitura, com escopo explícito, comunicação de saída autenticada e configuração assinada. Não exponha o painel de administração diretamente à rede monitorada.
+2. **API de ingestão:** gateway com autenticação por organização, autorização por ativo, rate limiting, validação de payload e trilha de auditoria. Segredos ficam no servidor, nunca no JavaScript público.
+3. **Processamento:** fila para eventos e tarefas agendadas, deduplicação e correlação de alertas. Playbooks começam em modo de recomendação e só executam ações após aprovação explícita.
+4. **Persistência:** PostgreSQL para contas, ativos, escopos e auditoria; armazenamento de séries temporais para métricas; armazenamento de objetos para evidências e relatórios. Defina retenção e exclusão desde o início.
+5. **Acesso remoto:** OIDC ou passkeys, MFA, RBAC por organização e sessões revogáveis. Para acesso de operadores, prefira VPN ou túnel privado com menor privilégio.
+6. **Integrações:** API versionada, webhooks assinados, exportação CSV/PDF e conectores opcionais para provedores de alerta. Documente limites e contratos antes de publicar cada integração.
 
-O projeto inclui:
+## Roadmap sugerido
 
-auditoria básica de segurança,
+- Inventário de ativos com propriedade, autorização, criticidade e janela de manutenção.
+- Checagens de disponibilidade, latência e validade de certificados TLS.
+- Correlação de exposição com CVEs, versão afetada, evidência e recomendação de correção.
+- Alertas por limiar com janela de silêncio, deduplicação e histórico de confirmação.
+- Relatórios periódicos de tendência, risco aceito e itens corrigidos.
+- Exportação e API para integração com ferramentas dos pequenos provedores.
+- Simulações seguras em laboratório, separadas de qualquer ativo de produção.
 
-relatório de portas abertas, falhas de configuração e incidentes,
+## Direção de UI/UX
 
-identificação de exposições e riscos baseados em CVEs recentes,
+Preserve o tema escuro com ciano para telemetria e verde para estado saudável; reserve âmbar e vermelho para atenção e incidente. Use gráficos com período e unidade explícitos, tabelas filtráveis, hierarquia clara e linguagem que explique impacto e próxima ação. Neon e animações devem apoiar estados, não competir com os dados. Respeite teclado, contraste, leitores de tela e `prefers-reduced-motion`.
 
-monitoramento contínuo com indicadores,
+## Identidade e domínios
 
-automação + alertas proativos,
+Slogan recomendado: **“Enxergue os riscos. Proteja o que importa.”**
 
-interface futurista e responsiva com animações.
+Possíveis nomes para pesquisa de disponibilidade (nenhum domínio foi verificado):
 
-📌 Objetivos do projeto
+- `netpulse.dev`
+- `watchmesh.app`
+- `radarstack.io`
+- `signalfort.app`
+- `packetwatch.net`
+- `sentinellink.dev`
+- `cyberradar.app`
+- `netlume.io`
 
-Tornar-se uma opção gratuita e acessível de monitoramento de rede.
+## Texto institucional
 
-Oferecer análises claras e compreensíveis, mesmo para usuários menos técnicos.
+O LDA CyberWatch ajuda você a entender a saúde e a exposição da sua rede. Reúna indicadores, acompanhe mudanças e organize riscos em uma visão objetiva, com recomendações que fazem sentido para quem administra uma infraestrutura todos os dias. Comece pelo essencial: saiba quais ativos estão no escopo, o que mudou e qual é o próximo passo mais importante.
 
-Criar dashboards futuristas e interativos.
+Para residências, pequenos provedores e equipes independentes, a proposta é tornar a segurança mais acessível sem esconder a complexidade necessária para tomar boas decisões. Monitoramento e testes devem ocorrer somente em sistemas próprios ou com autorização documentada.
 
-Evoluir para incluir API própria, métricas em tempo real e integrações externas.
+## Ideias para diferenciar o produto
 
-Ajudar usuários a aumentar a postura de segurança sem custos.
+- **Mapa de impacto:** relacione um alerta aos serviços e usuários que podem ser afetados.
+- **Explicação em dois níveis:** resumo direto para decisão e evidências técnicas expansíveis.
+- **Orçamento de exposição:** mostre a evolução dos serviços publicados e do tempo até correção.
+- **Modo de manutenção:** pause alertas esperados sem apagar o histórico.
+- **Relatório de confiança:** registre origem, horário, versão do agente e integridade das evidências.
+- **Laboratório de aprendizado:** reproduza achados em ambiente isolado, sem testar alvos externos.
 
-📌 Requisitos da tarefa
+## Desenvolvimento local
 
-Sua tarefa é:
+Não há gerenciador de pacotes nem processo de build. Sirva o diretório raiz com um servidor estático, por exemplo:
 
-Melhorar o conceito do projeto
+```powershell
+python -m http.server 8000
+```
 
-Adicionar ideias avançadas, recursos, módulos futuros, automações e funcionalidades inovadoras.
+Abra `http://localhost:8000`. Para produção, configure o domínio base, HTTPS e cabeçalhos de segurança na hospedagem. O HTML não consegue substituir cabeçalhos HTTP como CSP, HSTS e `X-Content-Type-Options`.
 
-Propor melhorias técnicas
+## Limitações e segurança
 
-Sugestões de arquitetura, coleta de dados, UX, acesso remoto, automações, segurança, banco de dados, relatórios etc.
-
-Criar identidade futurista e tecnológica
-
-Recomendar estilos visuais, animações, comportamento do layout, efeitos neon, HUDs, gráficos etc.
-
-A interface precisa lembrar dashboards de segurança, cyberpunk, scanners, etc.
-
-Sugerir nomes modernos para o domínio
-Devem ser:
-
-futuristas,
-
-curtos,
-
-fáceis de lembrar,
-
-relacionados a segurança, rede, monitoramento, vigilância ou IA.
-
-Exemplos aceitáveis:
-algo como cyberscan.ai, netguard.io, watchgrid.app, etc.
-Mas você deve gerar novas opções.
-
-Melhorar a apresentação e descrição geral do serviço
-
-Criar textos mais profissionais, claros e atraentes para o site.
-
-Pode sugerir slogan, frase de impacto e copywriting.
-
-Manter o foco no público-alvo
-
-Pessoas sem conhecimento profundo em segurança, mas que querem proteger sua rede.
-
-Pequenos provedores e administradores independentes.
-
-📌 Formato da resposta desejada
-
-A resposta deve trazer:
-
-Resumo do projeto melhorado
-
-Novas funcionalidades sugeridas
-
-Arquitetura recomendada
-
-Melhorias na interface futurista (UI/UX)
-
-Lista de domínios possíveis
-
-Texto institucional reescrito e otimizado
-
-Ideias inovadoras e “fora da caixinha”
-
-Use criatividade, inovação e profundidade técnica.
-O objetivo é transformar esse serviço em um ecossistema completo de monitoramento de rede e cibersegurança com visual futurista e extremamente profissional.
+- O dashboard e a lista de sistemas são demonstrações, não telemetria operacional.
+- A autenticação do frontend inclui token demonstrativo em `localStorage`; a autorização precisa ser imposta pelo backend.
+- O cabeçalho `CyberWatch2026` usado pelas integrações é entregue ao navegador e não deve ser tratado como segredo. Antes de produção, remova credenciais do cliente e implemente autenticação e autorização no servidor; confirme a compatibilidade do backend antes de retirar o cabeçalho.
+- A emissão do PDF registra dados fornecidos pelo usuário; ela não executa nem comprova testes de capacidade ou segurança.
+- Publique políticas de privacidade, cookies e termos revisadas para a operação real. Os textos exibidos no protótipo são avisos informativos, não aconselhamento jurídico.

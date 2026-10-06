@@ -3,10 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <title>Sistemas Monitorados – LDA CyberWatch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Visão dos sistemas cadastrados para acompanhamento no protótipo CyberWatch." />
+    <meta name="theme-color" content="#070b12" />
 
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
     />
     <link rel="stylesheet" href="src/css/style.css" />
   </head>
@@ -14,37 +19,36 @@
   <body class="bg-dark text-light">
     <div class="grid-bg"></div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-glass px-3">
-      <a class="navbar-brand neon-text" href="index.html">LDA CyberWatch</a>
-    </nav>
-
-    <section class="container py-5">
-      <h2 class="neon-text text-center mb-4">Sistemas Monitorados</h2>
+    <main class="container py-5" aria-labelledby="systems-title">
+      <header class="section-heading text-center mb-4">
+        <p class="eyebrow">INVENTÁRIO / DEMONSTRAÇÃO</p>
+        <h1 id="systems-title" class="neon-text">Sistemas monitorados</h1>
+        <p class="subtitulo">Os estados e métricas exibidos são dados ilustrativos do protótipo.</p>
+      </header>
 
       <div class="row g-4">
         <div class="col-md-6">
-          <div class="card card-futuristic p-3">
-            <h4 class="neon-text">HoppeHosting.com</h4>
-            <p>Monitor HTTP/S – https://hoppehosting.com</p>
-            <p>
-              Status atual: <span class="text-success fw-bold">Online</span>
-            </p>
-            <p>Uptime últimos 7 dias: 100%</p>
-            <p>Últimos incidentes: Nenhum</p>
-          </div>
+          <article class="card card-futuristic p-3 h-100">
+            <p class="module-index">ATIVO 01</p>
+            <h2 class="h5 neon-text">HoppeHosting.com</h2>
+            <p>Verificação de disponibilidade HTTP/S</p>
+            <p>Status de exemplo: <span class="text-success fw-bold">Online</span></p>
+            <p>Disponibilidade de exemplo: 100% nos últimos 7 dias</p>
+            <p class="mb-0">Eventos de exemplo: nenhum registrado</p>
+          </article>
         </div>
 
         <div class="col-md-6">
-          <div class="card card-futuristic p-3">
-            <h4 class="neon-text">ClientWeb</h4>
-            <p>
-              Status atual: <span class="text-success fw-bold">Online</span>
-            </p>
-            <p>Uptime últimos 30 dias: 97.052%</p>
-            <p>Incidentes: 22</p>
-          </div>
+          <article class="card card-futuristic p-3 h-100">
+            <p class="module-index">ATIVO 02</p>
+            <h2 class="h5 neon-text">ClientWeb</h2>
+            <p>Status de exemplo: <span class="text-success fw-bold">Online</span></p>
+            <p>Disponibilidade de exemplo: 97,052% nos últimos 30 dias</p>
+            <p class="mb-0">Eventos de exemplo: 22</p>
+          </article>
         </div>
       </div>
-    </section>
+    </main>
+    <script type="module" src="src/components/site-shell.js"></script>
   </body>
 </html>
